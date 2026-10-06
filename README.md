@@ -320,11 +320,25 @@ Not a fix: restoring the 1 B/ms floor on allocation throughput alone (see mechan
 Searches performed (2026-10-06): nodejs/node issues+PRs via `gh search issues`; GitHub-wide issue
 search; web search for the V8 symbol names; Gerrit search; issues.chromium.org (signed in) for
 `"memory reducer"` (130 hits, titles skimmed), `HasLowAllocationRate OR HasLowEmbedderAllocationRate OR
-SmoothedBytesAndDuration OR "mutator utilization" OR "embedder allocation"` (23 hits), node.js variants.
+SmoothedBytesAndDuration OR "mutator utilization" OR "embedder allocation"` (23 hits), node.js variants;
+second pass: `cppgc "memory reducer"` (13), `"embedder throughput" OR "embedder allocation rate" OR …`
+(4), symptom phrasings (`"heap not shrinking" OR "rss not released" OR …`, 0), the trace strings
+`"high alloc" OR "low alloc" OR "trace-memory-reducer"` (3), `(deno OR node OR electron) ("memory
+reducer" OR "idle gc" …) modified>2024-10-01` (26, none relevant), and the 2017–2020 window of
+`"memory reducer"` that the first pass's 50-result page did not reach (19).
 
 - None of those searches found a report of this mechanism.
 - https://issues.chromium.org/issues/42204538 — ring-buffer latency complaint that the CL addresses
   (see above).
+- https://issues.chromium.org/issues/42200264 (v8:10255, 2020, WontFix) — a Node user with the same
+  user-facing symptom (1.6 GB held after a 100 s burst on an IoT server; "GC does not run after timers
+  of ~9 s or longer"). Different mechanism in that V8 (7.9: reducer went `kDone` after the last GC and
+  was only re-armed by further allocation), but the closest prior Node-embedder report, and the
+  response ("V8 has a memory reducer task that is supposed to schedule GCs in such situations")
+  describes exactly what no longer happens on 13.x/14.x.
+- https://issues.chromium.org/issues/42203693 — V8 now creates a `CppHeap` automatically when the
+  embedder does not provide one (CL 6348469, V8 13.5, 2025). So the embedder term is live for every
+  embedder, not just ones that attach a `CppHeap`; any that never allocates on it sees exactly 0.
 - https://issues.chromium.org/issues/372328123 "Unreferenced memory not returned to system heap in timely
   fashion" (WAI; external ArrayBuffer accounting, fixed by CL 7054782). Comment #10 is a useful writeup
   of the reducer's scheduling conditions.
