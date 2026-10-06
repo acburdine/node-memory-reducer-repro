@@ -32,7 +32,7 @@ Investigation date: 2026-10-06. Upstream reports: V8 <TBD>, nodejs/node <TBD>.
 | Path | What |
 |---|---|
 | `repro.js` | Standalone repro (no deps) |
-| `run.sh` | `./run.sh <node-version> <idle-mode> [extra node flags]` → runs in `node:<v>-bookworm-slim` (or `IMAGE=…`), writes `traces/…log` with host-elapsed-seconds prefix |
+| `run.sh` | `./run.sh <node-version> <idle-mode> [extra node flags]` → runs in `node:<v>-bookworm-slim` (or `IMAGE=…`), writes `traces/…log` with host-elapsed-seconds prefix. `EXTRSS=1` also samples `VmRSS` from `/proc/1/status` via `docker exec` every 5 s (kernel number, independent of Node) into `traces/…-extrss.log` |
 | `traces/` | Raw outputs: 3 Node versions × 3 idle modes, flag experiments, `vm-*` modes, patched and control from-source Node 24 builds. Harness revision: `repro.js` at the commit that added each trace (see `git log -- traces/<file>`); `vm-*` modes were added after the baseline/flag runs. |
 | `patch/` | Proposed fix (`0001-…patch`, paths are `deps/v8/…`; use `src/heap/heap.cc` for upstream) + `Dockerfile` that builds Node 24.21.0 with (`APPLY_PATCH=1`) or without (`APPLY_PATCH=0`) it |
 
@@ -223,6 +223,24 @@ Decisive trace lines (verbatim from `traces/24.21.0-log.log:58-62` and `traces/2
 49444 ms: Memory reducer: low alloc, foreground
 49444 ms: Memory reducer: started GC #1
 49529 ms: Mark-Compact (reduce) 396.4 (426.6) -> 3.6 (10.4) MB
+```
+
+### Memory numbers are not Node's own accounting
+
+Three independent sources agree. The reducer decision lines (`high alloc` / `low alloc` /
+`started GC`) and the `Mark-Compact (reduce)` events are V8's `--trace-memory-reducer` /
+`--trace-gc` output. `process.memoryUsage().rss` is `uv_resident_set_memory()` → `/proc/self/statm`
+(kernel), only `heapTotal`/`heapUsed` come from V8's heap statistics. And `EXTRSS=1` samples
+`VmRSS` from `/proc/1/status` via `docker exec`, outside the Node process entirely
+(`traces/24.21.0-log-extrss.log`, companion run `24.21.0-log-extrss-run.log`, official Node 24):
+
+```
+   1.12| VmRSS=790 MB
+  21.52| VmRSS=1430 MB       <- burst done at 5.45 s; flat from here
+  ...
+ 103.25| VmRSS=1417 MB
+ 123.58| VmRSS=61 MB         <- Mark-Compact (reduce) at 105.9 s (watchdog)
+ 143.97| VmRSS=61 MB
 ```
 
 ## Flag experiments (idle mode `log`, one run each)
