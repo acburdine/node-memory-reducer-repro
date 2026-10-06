@@ -18,9 +18,9 @@ node --trace-gc --trace-memory-reducer --trace-mutator-utilization repro.js [log
 
 | first `Mark-Compact (reduce)` after the burst | 22.23.3 | 24.21.0 | 26.10.0 | 24.21.0 + patch |
 |---|---|---|---|---|
-| idle: 2 s logging timer | 44 s | 100 s (watchdog) | 97 s (watchdog) | **11 s** |
-| idle: + 64 KB garbage / 100 ms | 36 s | **never in 150 s, RSS 700 MB** | 122 s (watchdog) | 11 s |
-| idle: one 150 s timer | 44 s | 100 s (watchdog) | 98 s (watchdog) | 11 s |
+| idle: 2 s logging timer | 44 s | 100 s (watchdog) | 97 s (watchdog) | **11 s** (control build: 100 s) |
+| idle: + 64 KB garbage / 100 ms | 36 s | **never in 150 s, RSS 700 MB** | 122 s (watchdog) | 11 s (control: 140 s) |
+| idle: one 150 s timer | 44 s | 100 s (watchdog) | 98 s (watchdog) | 11 s (control: 100 s) |
 
 Investigation date: 2026-10-06. Upstream reports: V8 <TBD>, nodejs/node <TBD>.
 
@@ -257,14 +257,27 @@ one run each):
 | trickle | 11 s | 1122 → 3.1 MB | 59 MB |
 
 First tick after the burst (t=8.2) is still `high alloc` (young/old terms still decaying); second tick
-(t=16.3) is `low alloc` and starts the reduce GC; second reducer GC 600 ms later. Same build,
-unpatched official binary: 100 s / 100 s / never. With the patch `HasLowEmbedderAllocationRate` returns
-before `ComputeMutatorUtilization`, so no `Embedder mutator utilization` line is printed.
+(t=16.3) is `low alloc` and starts the reduce GC; second reducer GC 600 ms later. With the patch
+`HasLowEmbedderAllocationRate` returns before `ComputeMutatorUtilization`, so no
+`Embedder mutator utilization` line is printed.
+
+**Control** — same Dockerfile with `APPLY_PATCH=0` (identical source, toolchain, configure flags;
+`traces/24.21.0-control-{log,trickle,silent}.log`):
+
+| idle mode | first reduce GC after burst end | RSS at 155 s |
+|---|---|---|
+| log | 100 s (watchdog, `high alloc` every tick) | 60 MB |
+| silent | 100 s (watchdog) | 59 MB |
+| trickle | regular MC at 42.6 s (`pooled: 1269 MB`) resets the clock; watchdog reduce GC at 145.9 s | 64 MB |
+
+Control behaves like the official binary; the only difference between control and patched is the
+3-line change. Burst throughput was ~1000 chunks for both from-source builds when the host was idle
+(see caveat below), so the earlier concern about build flags is moot.
 
 Caveat on chunk counts: the baseline runs (9 containers in parallel on the same host) got through
-~106 chunks in 5 s; later runs with 3 containers in parallel got ~420 (official binary, `vm-*` modes) to
-~830 (patched build, host otherwise idle). Host contention, not build flags. Heap sizes differ
-accordingly; the comparison is about reducer behaviour, not throughput.
+~106 chunks in 5 s; runs with 3 containers in parallel got ~420 (official binary, `vm-*` modes, during a
+build), ~830 (patched) to ~1000 (control) with the host otherwise idle. Host contention, not build
+flags. Heap sizes differ accordingly; the comparison is about reducer behaviour, not throughput.
 
 Alternative fix: skip the embedder term in `HasLowAllocationRate()` when `EmbedderAllocationCounter()`
 has never been non-zero. Equivalent for Node; the patch above is smaller.
