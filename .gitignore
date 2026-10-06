@@ -1,0 +1,6 @@
+# local working files, not part of the public repro
+src/
+codex-review-prompt.md
+v8-bug-report.md
+nodejs-issue.md
+.DS_Store

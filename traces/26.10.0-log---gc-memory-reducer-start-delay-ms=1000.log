@@ -1,0 +1,255 @@
+   0.95| [0.0s] start node=v26.10.0 v8=14.6.202.34-node.34 mode=log rss=39.4MB heapTotal=4.4MB heapUsed=3.7MB
+   0.95| [1:0xffff8ca50000]      188 ms: Scavenge 5.0 (6.0) -> 4.6 (6.8) MB, pooled: 0.0 MB, 2.12 / 0.00 ms (average mu = 1.000, current mu = 1.000) allocation failure; 
+   0.95| [1:0xffff8ca50000:0]      188 ms: Young generation mutator utilization = 0.989 (mutator_speed=4337, gc_speed=374344)
+   0.95| [1:0xffff8ca50000]      190 ms: Scavenge 5.0 (7.0) -> 4.9 (7.5) MB, pooled: 0.0 MB, 1.63 / 0.00 ms (average mu = 1.000, current mu = 1.000) allocation failure; 
+   0.95| [1:0xffff8ca50000:0]      190 ms: Young generation mutator utilization = 0.985 (mutator_speed=7041, gc_speed=455234)
+   0.97| [1:0xffff8ca50000]      200 ms: Scavenge 6.6 (8.5) -> 6.4 (9.5) MB, pooled: 0.0 MB, 1.97 / 0.00 ms (average mu = 1.000, current mu = 1.000) allocation failure; 
+   0.97| [1:0xffff8ca50000:0]      200 ms: Young generation mutator utilization = 0.971 (mutator_speed=18737, gc_speed=622605)
+   0.97| [1:0xffff8ca50000]      202 ms: Scavenge 6.8 (9.8) -> 6.8 (11.8) MB, pooled: 0.0 MB, 2.06 / 0.00 ms (average mu = 1.000, current mu = 1.000) allocation failure; 
+   0.97| [1:0xffff8ca50000:0]      202 ms: Young generation mutator utilization = 0.970 (mutator_speed=22116, gc_speed=714939)
+   0.98| [1:0xffff8ca50000]      219 ms: Scavenge 10.3 (13.8) -> 9.9 (15.0) MB, pooled: 0.0 MB, 8.94 / 0.00 ms (average mu = 1.000, current mu = 1.000) allocation failure; 
+   0.98| [1:0xffff8ca50000:0]      219 ms: Young generation mutator utilization = 0.923 (mutator_speed=45723, gc_speed=550704)
+   1.00| [1:0xffff8ca50000]      230 ms: Scavenge 10.9 (15.9) -> 10.7 (19.4) MB, pooled: 0.0 MB, 8.56 / 0.00 ms (average mu = 1.000, current mu = 1.000) allocation failure; 
+   1.00| [1:0xffff8ca50000:0]      230 ms: Young generation mutator utilization = 0.911 (mutator_speed=51189, gc_speed=525761)
+   1.02| [1:0xffff8ca50000]      257 ms: Scavenge 18.0 (23.4) -> 16.3 (25.4) MB, pooled: 0.0 MB, 13.19 / 0.00 ms (average mu = 1.000, current mu = 1.000) allocation failure; 
+   1.02| [1:0xffff8ca50000:0]      257 ms: Young generation mutator utilization = 0.842 (mutator_speed=96905, gc_speed=514948)
+   1.05| [1:0xffff8ca50000]      284 ms: Scavenge 19.7 (28.6) -> 18.9 (34.8) MB, pooled: 0.0 MB, 13.79 / 0.00 ms (average mu = 1.000, current mu = 1.000) allocation failure; 
+   1.05| [1:0xffff8ca50000:0]      284 ms: Young generation mutator utilization = 0.834 (mutator_speed=104538, gc_speed=526028)
+   1.10| [1:0xffff8ca50000]      331 ms: Scavenge 40.7 (49.8) -> 37.5 (55.1) MB, pooled: 0.0 MB, 20.96 / 0.00 ms (average mu = 1.000, current mu = 1.000) allocation failure; 
+   1.10| [1:0xffff8ca50000:0]      331 ms: Young generation mutator utilization = 0.755 (mutator_speed=182385, gc_speed=563109)
+   1.13| [1:0xffff8ca50000]      368 ms: Scavenge 43.4 (60.3) -> 42.6 (72.1) MB, pooled: 0.0 MB, 30.93 / 0.00 ms (average mu = 1.000, current mu = 1.000) allocation failure; 
+   1.13| [1:0xffff8ca50000:0]      369 ms: Young generation mutator utilization = 0.727 (mutator_speed=202304, gc_speed=538309)
+   1.26| [1:0xffff8ca50000]      492 ms: Scavenge 84.8 (100.8) -> 75.7 (109.5) MB, pooled: 0.0 MB, 74.91 / 0.00 ms (average mu = 1.000, current mu = 1.000) allocation failure; 
+   1.26| [1:0xffff8ca50000:0]      492 ms: Young generation mutator utilization = 0.585 (mutator_speed=321993, gc_speed=453020)
+   1.49| [1:0xffff8ca50000]      723 ms: Incremental Mark-Compact 96.0 (129.1) -> 91.6 (134.1) MB, pooled: 0.0 MB, 71.44 / 0.00 ms (+ 41.5 ms in 161 steps since start of marking, biggest step 24.6 ms, walltime since start of marking 217 ms) (average mu = 0.878, current mu = 0.878) allocation failure; Incremental marking forced finalization
+   1.69| [1:0xffff8ca50000]      918 ms: Scavenge 138.4 (148.3) -> 129.4 (164.0) MB, pooled: 0.0 MB, 82.02 / 0.00 ms (average mu = 0.878, current mu = 0.878) allocation failure; 
+   1.69| [1:0xffff8ca50000:0]      918 ms: Young generation mutator utilization = 0.630 (mutator_speed=238376, gc_speed=405211)
+   1.78| [1:0xffff8ca50000]     1008 ms: Scavenge 135.5 (170.0) -> 134.4 (192.5) MB, pooled: 0.0 MB, 78.02 / 0.00 ms (average mu = 0.878, current mu = 0.878) allocation failure; 
+   1.78| [1:0xffff8ca50000:0]     1009 ms: Young generation mutator utilization = 0.611 (mutator_speed=247874, gc_speed=389178)
+   1.86| [1:0xffff8ca50000]     1084 ms: Scavenge 176.6 (205.4) -> 168.4 (208.7) MB, pooled: 0.0 MB, 42.42 / 0.00 ms (average mu = 0.878, current mu = 0.878) allocation failure; 
+   1.86| [1:0xffff8ca50000:0]     1084 ms: Young generation mutator utilization = 0.517 (mutator_speed=383861, gc_speed=410878)
+   1.90| [1:0xffff8ca50000]     1138 ms: Scavenge 175.6 (210.7) -> 174.2 (231.7) MB, pooled: 0.0 MB, 47.62 / 0.00 ms (average mu = 0.878, current mu = 0.878) allocation failure; 
+   1.90| [1:0xffff8ca50000:0]     1138 ms: Young generation mutator utilization = 0.513 (mutator_speed=403029, gc_speed=425152)
+   2.06| [1:0xffff8ca50000]     1290 ms: Scavenge 215.3 (244.2) -> 207.4 (248.2) MB, pooled: 0.0 MB, 93.34 / 0.00 ms (average mu = 0.878, current mu = 0.878) allocation failure; 
+   2.06| [1:0xffff8ca50000:0]     1291 ms: Young generation mutator utilization = 0.476 (mutator_speed=436261, gc_speed=396356)
+   2.10| [1:0xffff8ca50000]     1323 ms: Scavenge 224.6 (257.9) -> 221.3 (278.9) MB, pooled: 0.0 MB, 20.34 / 0.00 ms (average mu = 0.878, current mu = 0.878) allocation failure; 
+   2.10| [1:0xffff8ca50000:0]     1323 ms: Young generation mutator utilization = 0.478 (mutator_speed=478611, gc_speed=438154)
+   2.19| [1:0xffff8ca50000]     1421 ms: Scavenge 255.6 (288.8) -> 248.9 (297.3) MB, pooled: 0.0 MB, 46.45 / 0.00 ms (average mu = 0.878, current mu = 0.878) allocation failure; 
+   2.19| [1:0xffff8ca50000:0]     1421 ms: Young generation mutator utilization = 0.483 (mutator_speed=479972, gc_speed=447557)
+   2.19| [1:0xffff8ca50000:0]     1426 ms: Young generation mutator utilization = 0.476 (mutator_speed=493036, gc_speed=447557)
+   2.19| [1:0xffff8ca50000:0]     1427 ms: Memory reducer: high alloc, foreground
+   2.19| [1:0xffff8ca50000:0]     1427 ms: Memory reducer: waiting for 8000 ms
+   2.27| [1:0xffff8ca50000]     1493 ms: Scavenge 270.8 (304.1) -> 266.6 (321.6) MB, pooled: 0.0 MB, 45.96 / 0.00 ms (average mu = 0.878, current mu = 0.878) allocation failure; 
+   2.27| [1:0xffff8ca50000:0]     1494 ms: Young generation mutator utilization = 0.477 (mutator_speed=500049, gc_speed=455373)
+   2.32| [1:0xffff8ca50000]     1559 ms: Scavenge 297.3 (330.8) -> 291.3 (342.0) MB, pooled: 0.0 MB, 41.48 / 0.00 ms (average mu = 0.878, current mu = 0.878) allocation failure; 
+   2.33| [1:0xffff8ca50000:0]     1559 ms: Young generation mutator utilization = 0.455 (mutator_speed=562140, gc_speed=469550)
+   2.45| [1:0xffff8ca50000]     1682 ms: Scavenge 315.9 (349.2) -> 311.2 (364.5) MB, pooled: 0.0 MB, 89.21 / 0.00 ms (average mu = 0.878, current mu = 0.878) allocation failure; 
+   2.45| [1:0xffff8ca50000:0]     1682 ms: Young generation mutator utilization = 0.456 (mutator_speed=555008, gc_speed=464980)
+   2.57| [1:0xffff8ca50000]     1804 ms: Scavenge 338.8 (372.9) -> 333.5 (385.4) MB, pooled: 0.0 MB, 66.21 / 0.00 ms (average mu = 0.878, current mu = 0.878) allocation failure; 
+   2.57| [1:0xffff8ca50000:0]     1804 ms: Young generation mutator utilization = 0.495 (mutator_speed=492500, gc_speed=482148)
+   2.73| [1:0xffff8ca50000]     1960 ms: Scavenge 358.2 (392.9) -> 353.4 (406.9) MB, pooled: 0.0 MB, 98.47 / 0.00 ms (average mu = 0.878, current mu = 0.878) allocation failure; 
+   2.73| [1:0xffff8ca50000:0]     1960 ms: Young generation mutator utilization = 0.520 (mutator_speed=429798, gc_speed=465782)
+   2.79| [1:0xffff8ca50000]     2015 ms: Scavenge 382.3 (415.5) -> 376.5 (428.3) MB, pooled: 0.0 MB, 37.69 / 0.00 ms (average mu = 0.878, current mu = 0.878) allocation failure; 
+   2.79| [1:0xffff8ca50000:0]     2015 ms: Young generation mutator utilization = 0.477 (mutator_speed=518736, gc_speed=473358)
+   3.00| [1:0xffff8ca50000]     2229 ms: Scavenge 402.6 (436.0) -> 397.5 (450.5) MB, pooled: 0.0 MB, 121.74 / 0.00 ms (average mu = 0.878, current mu = 0.878) allocation failure; 
+   3.00| [1:0xffff8ca50000:0]     2229 ms: Young generation mutator utilization = 0.536 (mutator_speed=368661, gc_speed=425153)
+   3.72| [1:0xffff8ca50000]     2952 ms: Incremental Mark-Compact 407.7 (453.2) -> 328.4 (389.3) MB, pooled: 62.0 MB, 46.47 / 0.00 ms (+ 532.3 ms in 92 steps since start of marking, biggest step 21.6 ms, walltime since start of marking 715 ms) (average mu = 0.780, current mu = 0.749) finalize incremental marking via stack guard; GC in old space requested
+   4.07| [1:0xffff8ca50000]     3307 ms: Scavenge (during sweeping) 375.2 (392.5) -> 366.1 (400.5) MB, pooled: 51.8 MB, 242.63 / 0.00 ms (average mu = 0.780, current mu = 0.749) allocation failure; 
+   4.07| [1:0xffff8ca50000:0]     3307 ms: Young generation mutator utilization = 0.672 (mutator_speed=168492, gc_speed=345696)
+   4.15| [1:0xffff8ca50000]     3381 ms: Scavenge 379.4 (413.8) -> 376.9 (436.8) MB, pooled: 15.8 MB, 44.03 / 0.00 ms (average mu = 0.780, current mu = 0.749) allocation failure; 
+   4.15| [1:0xffff8ca50000:0]     3381 ms: Young generation mutator utilization = 0.633 (mutator_speed=195446, gc_speed=336710)
+   4.21| [1:0xffff8ca50000]     3445 ms: Scavenge 413.8 (447.4) -> 406.6 (454.4) MB, pooled: 0.0 MB, 23.30 / 0.00 ms (average mu = 0.780, current mu = 0.749) allocation failure; 
+   4.21| [1:0xffff8ca50000:0]     3445 ms: Young generation mutator utilization = 0.528 (mutator_speed=308480, gc_speed=345683)
+   4.28| [1:0xffff8ca50000]     3508 ms: Scavenge 426.8 (460.4) -> 422.9 (479.1) MB, pooled: 0.0 MB, 42.57 / 0.00 ms (average mu = 0.780, current mu = 0.749) allocation failure; 
+   4.28| [1:0xffff8ca50000:0]     3508 ms: Young generation mutator utilization = 0.490 (mutator_speed=361613, gc_speed=347826)
+   4.35| [1:0xffff8ca50000]     3579 ms: Scavenge 455.0 (488.5) -> 448.8 (498.8) MB, pooled: 0.0 MB, 48.15 / 0.00 ms (average mu = 0.780, current mu = 0.749) allocation failure; 
+   4.35| [1:0xffff8ca50000:0]     3579 ms: Young generation mutator utilization = 0.431 (mutator_speed=454750, gc_speed=344721)
+   4.44| [1:0xffff8ca50000]     3672 ms: Scavenge 472.2 (505.8) -> 467.5 (522.3) MB, pooled: 0.0 MB, 25.88 / 0.00 ms (average mu = 0.780, current mu = 0.749) allocation failure; 
+   4.45| [1:0xffff8ca50000:0]     3672 ms: Young generation mutator utilization = 0.496 (mutator_speed=379787, gc_speed=373791)
+   4.49| [1:0xffff8ca50000]     3728 ms: Scavenge 497.4 (530.9) -> 491.5 (542.7) MB, pooled: 0.0 MB, 20.14 / 0.00 ms (average mu = 0.780, current mu = 0.749) allocation failure; 
+   4.49| [1:0xffff8ca50000:0]     3728 ms: Young generation mutator utilization = 0.482 (mutator_speed=428474, gc_speed=398900)
+   4.53| [1:0xffff8ca50000]     3768 ms: Scavenge 516.9 (550.4) -> 511.9 (565.7) MB, pooled: 0.0 MB, 20.20 / 0.00 ms (average mu = 0.780, current mu = 0.749) allocation failure; 
+   4.53| [1:0xffff8ca50000:0]     3768 ms: Young generation mutator utilization = 0.479 (mutator_speed=490492, gc_speed=450773)
+   4.62| [1:0xffff8ca50000]     3847 ms: Scavenge 532.0 (571.2) -> 528.1 (584.0) MB, pooled: 0.0 MB, 53.52 / 0.00 ms (average mu = 0.780, current mu = 0.749) allocation failure; 
+   4.62| [1:0xffff8ca50000:0]     3847 ms: Young generation mutator utilization = 0.463 (mutator_speed=502397, gc_speed=433051)
+   4.87| [1:0xffff8ca50000]     4100 ms: Scavenge 560.2 (593.8) -> 554.0 (604.1) MB, pooled: 0.0 MB, 102.62 / 0.00 ms (average mu = 0.780, current mu = 0.749) allocation failure; 
+   4.87| [1:0xffff8ca50000:0]     4100 ms: Young generation mutator utilization = 0.616 (mutator_speed=276723, gc_speed=444578)
+   5.02| [1:0xffff8ca50000]     4255 ms: Scavenge 571.4 (609.2) -> 568.0 (625.4) MB, pooled: 0.0 MB, 88.77 / 0.00 ms (average mu = 0.780, current mu = 0.749) allocation failure; 
+   5.02| [1:0xffff8ca50000:0]     4255 ms: Young generation mutator utilization = 0.708 (mutator_speed=244276, gc_speed=592165)
+   5.51| [1:0xffff8ca50000]     4747 ms: Scavenge 601.1 (635.3) -> 594.9 (644.3) MB, pooled: 0.0 MB, 204.41 / 0.00 ms (average mu = 0.780, current mu = 0.749) allocation failure; 
+   5.52| [1:0xffff8ca50000:0]     4747 ms: Young generation mutator utilization = 0.805 (mutator_speed=104966, gc_speed=434626)
+   5.87| [1:0xffff8ca50000]     5091 ms: Scavenge 617.2 (650.8) -> 613.5 (668.0) MB, pooled: 0.0 MB, 283.02 / 0.00 ms (average mu = 0.780, current mu = 0.749) allocation failure; 
+   5.87| [1:0xffff8ca50000:0]     5094 ms: Young generation mutator utilization = 0.661 (mutator_speed=159706, gc_speed=311632)
+   6.08| [5.1s] burst done chunks=105 rss=737.6MB heapTotal=670.7MB heapUsed=624.7MB
+   8.09| [7.2s] idle rss=730.4MB heapTotal=670.7MB heapUsed=624.7MB
+  10.10| [9.2s] idle rss=730.4MB heapTotal=670.7MB heapUsed=624.7MB
+  10.29| [1:0xffff8ca50000:0]     9528 ms: Young generation mutator utilization = 0.994 (mutator_speed=1843, gc_speed=311632)
+  10.29| [1:0xffff8ca50000:0]     9528 ms: Old generation mutator utilization = 0.986 (mutator_speed=4803, gc_speed=335943)
+  10.29| [1:0xffff8ca50000:0]     9528 ms: Memory reducer: high alloc, foreground
+  10.29| [1:0xffff8ca50000:0]     9528 ms: Memory reducer: waiting for 8000 ms
+  12.10| [11.2s] idle rss=730.4MB heapTotal=670.7MB heapUsed=624.7MB
+  14.11| [13.2s] idle rss=730.4MB heapTotal=670.7MB heapUsed=624.8MB
+  16.12| [15.2s] idle rss=716.7MB heapTotal=670.7MB heapUsed=624.8MB
+  18.13| [17.2s] idle rss=717.3MB heapTotal=670.7MB heapUsed=624.8MB
+  18.39| [1:0xffff8ca50000:0]    17628 ms: Young generation mutator utilization = 1.000 (mutator_speed=1, gc_speed=311632)
+  18.39| [1:0xffff8ca50000:0]    17628 ms: Old generation mutator utilization = 1.000 (mutator_speed=3, gc_speed=335943)
+  18.39| [1:0xffff8ca50000:0]    17628 ms: Embedder mutator utilization = 0.000 (mutator_speed=0, gc_speed=1)
+  18.39| [1:0xffff8ca50000:0]    17628 ms: Memory reducer: high alloc, foreground
+  18.39| [1:0xffff8ca50000:0]    17629 ms: Memory reducer: waiting for 8000 ms
+  20.13| [19.2s] idle rss=717.3MB heapTotal=670.7MB heapUsed=624.8MB
+  22.13| [21.2s] idle rss=717.3MB heapTotal=670.7MB heapUsed=624.8MB
+  24.13| [23.2s] idle rss=717.4MB heapTotal=670.7MB heapUsed=624.8MB
+  26.14| [25.2s] idle rss=717.6MB heapTotal=670.7MB heapUsed=624.8MB
+  26.50| [1:0xffff8ca50000:0]    25732 ms: Young generation mutator utilization = 1.000 (mutator_speed=1, gc_speed=311632)
+  26.50| [1:0xffff8ca50000:0]    25732 ms: Old generation mutator utilization = 1.000 (mutator_speed=6, gc_speed=335943)
+  26.50| [1:0xffff8ca50000:0]    25732 ms: Embedder mutator utilization = 0.000 (mutator_speed=0, gc_speed=1)
+  26.50| [1:0xffff8ca50000:0]    25732 ms: Memory reducer: high alloc, foreground
+  26.50| [1:0xffff8ca50000:0]    25732 ms: Memory reducer: waiting for 8000 ms
+  28.14| [27.2s] idle rss=717.6MB heapTotal=670.7MB heapUsed=624.8MB
+  30.14| [29.2s] idle rss=717.6MB heapTotal=670.7MB heapUsed=624.8MB
+  32.15| [31.2s] idle rss=717.6MB heapTotal=670.7MB heapUsed=624.9MB
+  34.15| [33.2s] idle rss=717.6MB heapTotal=670.7MB heapUsed=624.9MB
+  34.60| [1:0xffff8ca50000:0]    33832 ms: Young generation mutator utilization = 1.000 (mutator_speed=1, gc_speed=311632)
+  34.60| [1:0xffff8ca50000:0]    33832 ms: Old generation mutator utilization = 1.000 (mutator_speed=0, gc_speed=335943)
+  34.60| [1:0xffff8ca50000:0]    33832 ms: Embedder mutator utilization = 0.000 (mutator_speed=0, gc_speed=1)
+  34.60| [1:0xffff8ca50000:0]    33832 ms: Memory reducer: high alloc, foreground
+  34.60| [1:0xffff8ca50000:0]    33832 ms: Memory reducer: waiting for 8000 ms
+  36.15| [35.2s] idle rss=717.6MB heapTotal=670.7MB heapUsed=624.9MB
+  38.15| [37.2s] idle rss=717.6MB heapTotal=670.7MB heapUsed=624.9MB
+  40.16| [39.2s] idle rss=717.6MB heapTotal=670.7MB heapUsed=624.9MB
+  42.16| [41.2s] idle rss=717.6MB heapTotal=670.7MB heapUsed=624.9MB
+  42.70| [1:0xffff8ca50000:0]    41933 ms: Young generation mutator utilization = 1.000 (mutator_speed=1, gc_speed=311632)
+  42.70| [1:0xffff8ca50000:0]    41933 ms: Old generation mutator utilization = 1.000 (mutator_speed=0, gc_speed=335943)
+  42.70| [1:0xffff8ca50000:0]    41933 ms: Embedder mutator utilization = 0.000 (mutator_speed=0, gc_speed=1)
+  42.70| [1:0xffff8ca50000:0]    41933 ms: Memory reducer: high alloc, foreground
+  42.70| [1:0xffff8ca50000:0]    41933 ms: Memory reducer: waiting for 8000 ms
+  44.16| [43.2s] idle rss=717.6MB heapTotal=670.7MB heapUsed=624.9MB
+  46.16| [45.2s] idle rss=717.6MB heapTotal=670.7MB heapUsed=624.9MB
+  48.17| [47.2s] idle rss=717.6MB heapTotal=670.7MB heapUsed=624.9MB
+  50.17| [49.2s] idle rss=717.6MB heapTotal=670.7MB heapUsed=624.9MB
+  50.80| [1:0xffff8ca50000:0]    50035 ms: Young generation mutator utilization = 1.000 (mutator_speed=1, gc_speed=311632)
+  50.80| [1:0xffff8ca50000:0]    50035 ms: Old generation mutator utilization = 1.000 (mutator_speed=6, gc_speed=335943)
+  50.80| [1:0xffff8ca50000:0]    50035 ms: Embedder mutator utilization = 0.000 (mutator_speed=0, gc_speed=1)
+  50.80| [1:0xffff8ca50000:0]    50035 ms: Memory reducer: high alloc, foreground
+  50.80| [1:0xffff8ca50000:0]    50035 ms: Memory reducer: waiting for 8000 ms
+  52.18| [51.2s] idle rss=717.6MB heapTotal=670.7MB heapUsed=624.9MB
+  54.18| [53.2s] idle rss=717.6MB heapTotal=670.7MB heapUsed=624.9MB
+  56.19| [55.3s] idle rss=717.6MB heapTotal=670.7MB heapUsed=624.9MB
+  58.20| [57.3s] idle rss=717.6MB heapTotal=670.7MB heapUsed=624.9MB
+  58.90| [1:0xffff8ca50000:0]    58137 ms: Young generation mutator utilization = 1.000 (mutator_speed=1, gc_speed=311632)
+  58.90| [1:0xffff8ca50000:0]    58138 ms: Old generation mutator utilization = 1.000 (mutator_speed=0, gc_speed=335943)
+  58.90| [1:0xffff8ca50000:0]    58138 ms: Embedder mutator utilization = 0.000 (mutator_speed=0, gc_speed=1)
+  58.90| [1:0xffff8ca50000:0]    58138 ms: Memory reducer: high alloc, foreground
+  58.90| [1:0xffff8ca50000:0]    58138 ms: Memory reducer: waiting for 8000 ms
+  60.20| [59.3s] idle rss=717.6MB heapTotal=670.7MB heapUsed=624.9MB
+  62.20| [61.3s] idle rss=701.0MB heapTotal=670.7MB heapUsed=624.9MB
+  64.21| [63.3s] idle rss=703.6MB heapTotal=670.7MB heapUsed=624.9MB
+  66.21| [65.3s] idle rss=703.6MB heapTotal=670.7MB heapUsed=624.9MB
+  67.01| [1:0xffff8ca50000:0]    66244 ms: Young generation mutator utilization = 1.000 (mutator_speed=1, gc_speed=311632)
+  67.01| [1:0xffff8ca50000:0]    66245 ms: Old generation mutator utilization = 1.000 (mutator_speed=0, gc_speed=335943)
+  67.01| [1:0xffff8ca50000:0]    66245 ms: Embedder mutator utilization = 0.000 (mutator_speed=0, gc_speed=1)
+  67.01| [1:0xffff8ca50000:0]    66245 ms: Memory reducer: high alloc, foreground
+  67.01| [1:0xffff8ca50000:0]    66245 ms: Memory reducer: waiting for 8000 ms
+  68.21| [67.3s] idle rss=704.3MB heapTotal=670.7MB heapUsed=624.9MB
+  70.22| [69.3s] idle rss=704.3MB heapTotal=670.7MB heapUsed=624.9MB
+  72.22| [71.3s] idle rss=704.3MB heapTotal=670.7MB heapUsed=624.9MB
+  74.23| [73.3s] idle rss=704.3MB heapTotal=670.7MB heapUsed=624.9MB
+  75.12| [1:0xffff8ca50000:0]    74350 ms: Young generation mutator utilization = 1.000 (mutator_speed=1, gc_speed=311632)
+  75.12| [1:0xffff8ca50000:0]    74350 ms: Old generation mutator utilization = 1.000 (mutator_speed=0, gc_speed=335943)
+  75.12| [1:0xffff8ca50000:0]    74350 ms: Embedder mutator utilization = 0.000 (mutator_speed=0, gc_speed=1)
+  75.12| [1:0xffff8ca50000:0]    74350 ms: Memory reducer: high alloc, foreground
+  75.12| [1:0xffff8ca50000:0]    74350 ms: Memory reducer: waiting for 8000 ms
+  76.23| [75.3s] idle rss=704.3MB heapTotal=670.7MB heapUsed=624.9MB
+  78.23| [77.3s] idle rss=704.3MB heapTotal=670.7MB heapUsed=624.9MB
+  80.24| [79.3s] idle rss=704.3MB heapTotal=670.7MB heapUsed=624.9MB
+  82.24| [81.3s] idle rss=704.3MB heapTotal=670.7MB heapUsed=624.9MB
+  83.22| [1:0xffff8ca50000:0]    82456 ms: Young generation mutator utilization = 1.000 (mutator_speed=1, gc_speed=311632)
+  83.22| [1:0xffff8ca50000:0]    82456 ms: Old generation mutator utilization = 1.000 (mutator_speed=0, gc_speed=335943)
+  83.22| [1:0xffff8ca50000:0]    82456 ms: Embedder mutator utilization = 0.000 (mutator_speed=0, gc_speed=1)
+  83.22| [1:0xffff8ca50000:0]    82456 ms: Memory reducer: high alloc, foreground
+  83.22| [1:0xffff8ca50000:0]    82456 ms: Memory reducer: waiting for 8000 ms
+  84.25| [83.3s] idle rss=704.3MB heapTotal=670.7MB heapUsed=624.9MB
+  86.25| [85.3s] idle rss=704.3MB heapTotal=670.7MB heapUsed=624.9MB
+  88.25| [87.3s] idle rss=704.3MB heapTotal=670.7MB heapUsed=624.9MB
+  90.26| [89.3s] idle rss=704.3MB heapTotal=670.7MB heapUsed=624.9MB
+  91.33| [1:0xffff8ca50000:0]    90561 ms: Young generation mutator utilization = 1.000 (mutator_speed=1, gc_speed=311632)
+  91.33| [1:0xffff8ca50000:0]    90561 ms: Old generation mutator utilization = 1.000 (mutator_speed=0, gc_speed=335943)
+  91.33| [1:0xffff8ca50000:0]    90561 ms: Embedder mutator utilization = 0.000 (mutator_speed=0, gc_speed=1)
+  91.33| [1:0xffff8ca50000:0]    90561 ms: Memory reducer: high alloc, foreground
+  91.33| [1:0xffff8ca50000:0]    90561 ms: Memory reducer: waiting for 8000 ms
+  92.26| [91.3s] idle rss=704.3MB heapTotal=670.7MB heapUsed=624.9MB
+  94.27| [93.3s] idle rss=704.3MB heapTotal=670.7MB heapUsed=624.9MB
+  96.27| [95.3s] idle rss=704.3MB heapTotal=670.7MB heapUsed=624.9MB
+  98.27| [97.3s] idle rss=704.3MB heapTotal=670.7MB heapUsed=624.9MB
+  99.45| [1:0xffff8ca50000:0]    98683 ms: Young generation mutator utilization = 1.000 (mutator_speed=1, gc_speed=311632)
+  99.45| [1:0xffff8ca50000:0]    98683 ms: Old generation mutator utilization = 1.000 (mutator_speed=0, gc_speed=335943)
+  99.45| [1:0xffff8ca50000:0]    98683 ms: Embedder mutator utilization = 0.000 (mutator_speed=0, gc_speed=1)
+  99.45| [1:0xffff8ca50000:0]    98683 ms: Memory reducer: high alloc, foreground
+  99.45| [1:0xffff8ca50000:0]    98683 ms: Memory reducer: waiting for 8000 ms
+ 100.28| [99.3s] idle rss=704.3MB heapTotal=670.7MB heapUsed=624.9MB
+ 102.28| [101.3s] idle rss=704.3MB heapTotal=670.7MB heapUsed=624.9MB
+ 104.28| [103.3s] idle rss=704.3MB heapTotal=670.7MB heapUsed=624.9MB
+ 106.29| [105.4s] idle rss=703.7MB heapTotal=670.7MB heapUsed=624.9MB
+ 107.55| [1:0xffff8ca50000:0]   106785 ms: Young generation mutator utilization = 1.000 (mutator_speed=1, gc_speed=311632)
+ 107.55| [1:0xffff8ca50000:0]   106785 ms: Old generation mutator utilization = 1.000 (mutator_speed=0, gc_speed=335943)
+ 107.55| [1:0xffff8ca50000:0]   106785 ms: Embedder mutator utilization = 0.000 (mutator_speed=0, gc_speed=1)
+ 107.55| [1:0xffff8ca50000:0]   106785 ms: Memory reducer: high alloc, foreground
+ 107.55| [1:0xffff8ca50000:0]   106785 ms: Memory reducer: started GC #1
+ 107.65| [1:0xffff8ca50000:0]   106887 ms: Memory reducer: finished GC #1 (will do more)
+ 107.65| [1:0xffff8ca50000]   106887 ms: Incremental Mark-Compact (reduce) 624.9 (670.7) -> 4.2 (14.1) MB, pooled: 0.0 MB, 40.87 / 0.00 ms (+ 1.5 ms in 3 steps since start of marking, biggest step 1.0 ms, walltime since start of marking 102 ms) (average mu = 0.997, current mu = 1.000) finalize incremental marking via task; GC in old space requested
+ 108.25| [1:0xffff8ca50000:0]   107488 ms: Young generation mutator utilization = 1.000 (mutator_speed=0, gc_speed=311632)
+ 108.25| [1:0xffff8ca50000:0]   107488 ms: Old generation mutator utilization = 0.999 (mutator_speed=330, gc_speed=438934)
+ 108.25| [1:0xffff8ca50000:0]   107488 ms: Embedder mutator utilization = 0.000 (mutator_speed=0, gc_speed=1)
+ 108.25| [1:0xffff8ca50000:0]   107488 ms: Memory reducer: high alloc, foreground
+ 108.25| [1:0xffff8ca50000:0]   107488 ms: Memory reducer: waiting for 8000 ms
+ 108.29| [107.4s] idle rss=38.0MB heapTotal=14.1MB heapUsed=4.2MB
+ 110.30| [109.4s] idle rss=38.0MB heapTotal=14.1MB heapUsed=4.2MB
+ 112.30| [111.4s] idle rss=38.0MB heapTotal=14.1MB heapUsed=4.2MB
+ 114.31| [113.4s] idle rss=38.0MB heapTotal=14.1MB heapUsed=4.2MB
+ 116.31| [115.4s] idle rss=38.0MB heapTotal=14.1MB heapUsed=4.2MB
+ 116.36| [1:0xffff8ca50000:0]   115594 ms: Young generation mutator utilization = 1.000 (mutator_speed=2, gc_speed=311632)
+ 116.36| [1:0xffff8ca50000:0]   115594 ms: Old generation mutator utilization = 1.000 (mutator_speed=0, gc_speed=438934)
+ 116.36| [1:0xffff8ca50000:0]   115594 ms: Embedder mutator utilization = 0.000 (mutator_speed=0, gc_speed=1)
+ 116.36| [1:0xffff8ca50000:0]   115594 ms: Memory reducer: high alloc, foreground
+ 116.36| [1:0xffff8ca50000:0]   115594 ms: Memory reducer: waiting for 8000 ms
+ 118.32| [117.4s] idle rss=38.0MB heapTotal=14.1MB heapUsed=4.2MB
+ 120.32| [119.4s] idle rss=38.0MB heapTotal=14.1MB heapUsed=4.2MB
+ 122.33| [121.4s] idle rss=38.0MB heapTotal=14.1MB heapUsed=4.2MB
+ 124.33| [123.4s] idle rss=38.0MB heapTotal=14.1MB heapUsed=4.2MB
+ 124.46| [1:0xffff8ca50000:0]   123697 ms: Young generation mutator utilization = 1.000 (mutator_speed=1, gc_speed=311632)
+ 124.46| [1:0xffff8ca50000:0]   123698 ms: Old generation mutator utilization = 1.000 (mutator_speed=0, gc_speed=438934)
+ 124.46| [1:0xffff8ca50000:0]   123698 ms: Embedder mutator utilization = 0.000 (mutator_speed=0, gc_speed=1)
+ 124.46| [1:0xffff8ca50000:0]   123698 ms: Memory reducer: high alloc, foreground
+ 124.46| [1:0xffff8ca50000:0]   123698 ms: Memory reducer: waiting for 8000 ms
+ 126.34| [125.4s] idle rss=38.0MB heapTotal=14.1MB heapUsed=4.2MB
+ 128.34| [127.4s] idle rss=41.5MB heapTotal=14.1MB heapUsed=4.2MB
+ 130.35| [129.4s] idle rss=41.5MB heapTotal=14.1MB heapUsed=4.2MB
+ 132.35| [131.4s] idle rss=41.5MB heapTotal=14.1MB heapUsed=4.2MB
+ 132.57| [1:0xffff8ca50000:0]   131800 ms: Young generation mutator utilization = 1.000 (mutator_speed=1, gc_speed=311632)
+ 132.57| [1:0xffff8ca50000:0]   131800 ms: Old generation mutator utilization = 1.000 (mutator_speed=0, gc_speed=438934)
+ 132.57| [1:0xffff8ca50000:0]   131800 ms: Embedder mutator utilization = 0.000 (mutator_speed=0, gc_speed=1)
+ 132.57| [1:0xffff8ca50000:0]   131800 ms: Memory reducer: high alloc, foreground
+ 132.57| [1:0xffff8ca50000:0]   131800 ms: Memory reducer: waiting for 8000 ms
+ 134.35| [133.4s] idle rss=41.5MB heapTotal=14.1MB heapUsed=4.2MB
+ 136.36| [135.4s] idle rss=41.5MB heapTotal=14.1MB heapUsed=4.2MB
+ 138.37| [137.4s] idle rss=41.5MB heapTotal=14.1MB heapUsed=4.2MB
+ 140.37| [139.4s] idle rss=41.5MB heapTotal=14.1MB heapUsed=4.2MB
+ 140.67| [1:0xffff8ca50000:0]   139904 ms: Young generation mutator utilization = 1.000 (mutator_speed=1, gc_speed=311632)
+ 140.67| [1:0xffff8ca50000:0]   139904 ms: Old generation mutator utilization = 1.000 (mutator_speed=0, gc_speed=438934)
+ 140.67| [1:0xffff8ca50000:0]   139904 ms: Embedder mutator utilization = 0.000 (mutator_speed=0, gc_speed=1)
+ 140.67| [1:0xffff8ca50000:0]   139904 ms: Memory reducer: high alloc, foreground
+ 140.67| [1:0xffff8ca50000:0]   139904 ms: Memory reducer: waiting for 8000 ms
+ 142.38| [141.4s] idle rss=41.5MB heapTotal=14.1MB heapUsed=4.2MB
+ 144.38| [143.4s] idle rss=41.5MB heapTotal=14.1MB heapUsed=4.2MB
+ 146.38| [145.4s] idle rss=41.5MB heapTotal=14.1MB heapUsed=4.2MB
+ 148.38| [147.4s] idle rss=41.5MB heapTotal=14.1MB heapUsed=4.2MB
+ 148.78| [1:0xffff8ca50000:0]   148010 ms: Young generation mutator utilization = 1.000 (mutator_speed=1, gc_speed=311632)
+ 148.78| [1:0xffff8ca50000:0]   148010 ms: Old generation mutator utilization = 1.000 (mutator_speed=0, gc_speed=438934)
+ 148.78| [1:0xffff8ca50000:0]   148010 ms: Embedder mutator utilization = 0.000 (mutator_speed=0, gc_speed=1)
+ 148.78| [1:0xffff8ca50000:0]   148010 ms: Memory reducer: high alloc, foreground
+ 148.78| [1:0xffff8ca50000:0]   148010 ms: Memory reducer: waiting for 8000 ms
+ 150.39| [149.5s] idle rss=41.5MB heapTotal=14.1MB heapUsed=4.2MB
+ 152.40| [151.5s] idle rss=37.6MB heapTotal=14.1MB heapUsed=4.2MB
+ 154.40| [153.5s] idle rss=38.5MB heapTotal=14.1MB heapUsed=4.2MB
+ 156.40| [155.5s] idle rss=38.5MB heapTotal=14.1MB heapUsed=4.2MB
+ 156.40| [155.5s] end rss=39.1MB heapTotal=14.1MB heapUsed=4.2MB

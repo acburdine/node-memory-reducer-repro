@@ -1,0 +1,198 @@
+   2.80| [0.0s] start node=v22.23.3 v8=12.4.254.21-node.57 mode=log rss=38.7MB heapTotal=4.9MB heapUsed=3.3MB
+   2.81| [1:0xffffb8760000]      646 ms: Young generation mutator utilization = 0.992 (mutator_speed=1651, gc_speed=0)
+   2.81| [1:0xffffb8760000]      647 ms: Scavenge 4.6 (5.3) -> 4.3 (6.3) MB, pooled: 0 MB, 5.33 / 0.00 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+   2.86| [1:0xffffb8760000]      661 ms: Young generation mutator utilization = 0.985 (mutator_speed=2231, gc_speed=148416)
+   2.86| [1:0xffffb8760000]      661 ms: Scavenge 4.6 (6.3) -> 4.5 (7.0) MB, pooled: 0 MB, 11.19 / 0.00 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+   2.86| [1:0xffffb8760000]      668 ms: Young generation mutator utilization = 0.968 (mutator_speed=3395, gc_speed=102177)
+   2.86| [1:0xffffb8760000]      668 ms: Scavenge 5.2 (7.0) -> 5.0 (9.3) MB, pooled: 0 MB, 6.70 / 0.00 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+   2.95| [1:0xffffb8760000]      794 ms: Young generation mutator utilization = 0.950 (mutator_speed=5645, gc_speed=106841)
+   2.95| [1:0xffffb8760000]      794 ms: Scavenge 6.4 (9.3) -> 6.0 (9.8) MB, pooled: 0 MB, 108.98 / 0.00 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+   2.96| [1:0xffffb8760000]      799 ms: Young generation mutator utilization = 0.814 (mutator_speed=7082, gc_speed=30957)
+   2.96| [1:0xffffb8760000]      799 ms: Scavenge 6.9 (9.8) -> 6.7 (15.3) MB, pooled: 0 MB, 3.18 / 0.00 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+   2.98| [1:0xffffb8760000]      813 ms: Young generation mutator utilization = 0.780 (mutator_speed=12222, gc_speed=43258)
+   2.98| [1:0xffffb8760000]      816 ms: Scavenge 9.9 (15.3) -> 9.0 (15.5) MB, pooled: 0 MB, 9.35 / 0.00 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+   2.99| [1:0xffffb8760000]      827 ms: Young generation mutator utilization = 0.812 (mutator_speed=14367, gc_speed=62150)
+   2.99| [1:0xffffb8760000]      827 ms: Scavenge 10.5 (15.5) -> 10.1 (26.0) MB, pooled: 0 MB, 5.47 / 0.00 ms  (average mu = 1.000, current mu = 1.000) task; 
+   3.04| [1:0xffffb8760000]      886 ms: Young generation mutator utilization = 0.775 (mutator_speed=24261, gc_speed=83550)
+   3.04| [1:0xffffb8760000]      886 ms: Scavenge 17.0 (26.2) -> 15.1 (27.2) MB, pooled: 0 MB, 35.46 / 0.00 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+   3.07| [1:0xffffb8760000]      912 ms: Young generation mutator utilization = 0.793 (mutator_speed=26470, gc_speed=101529)
+   3.07| [1:0xffffb8760000]      912 ms: Scavenge 16.7 (27.2) -> 16.2 (48.4) MB, pooled: 0 MB, 20.65 / 0.00 ms  (average mu = 1.000, current mu = 1.000) task; 
+   3.16| [1:0xffffb8760000]      967 ms: Young generation mutator utilization = 0.726 (mutator_speed=45818, gc_speed=121681)
+   3.16| [1:0xffffb8760000]      968 ms: Scavenge 34.3 (51.4) -> 29.8 (52.9) MB, pooled: 0 MB, 16.18 / 0.00 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+   3.17| [1:0xffffb8760000]     1009 ms: Young generation mutator utilization = 0.348 (mutator_speed=313255, gc_speed=167490)
+   3.17| [1:0xffffb8760000]     1009 ms: Scavenge 36.1 (54.7) -> 34.6 (65.2) MB, pooled: 0 MB, 31.84 / 0.00 ms  (average mu = 1.000, current mu = 1.000) task; 
+   3.23| [1:0xffffb8760000]     1070 ms: Young generation mutator utilization = 0.352 (mutator_speed=369256, gc_speed=200476)
+   3.23| [1:0xffffb8760000]     1071 ms: Scavenge 53.7 (71.2) -> 49.4 (74.4) MB, pooled: 0 MB, 41.57 / 0.00 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+   3.41| [1:0xffffb8760000]     1254 ms: Young generation mutator utilization = 0.497 (mutator_speed=222084, gc_speed=219594)
+   3.41| [1:0xffffb8760000]     1254 ms: Scavenge (interleaved) 60.0 (77.6) -> 57.6 (86.8) MB, pooled: 0 MB, 62.36 / 0.00 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+   3.44| [1:0xffffb8760000]     1286 ms: Mark-Compact 57.8 (86.8) -> 57.5 (91.8) MB, pooled: 0 MB, 31.32 / 0.00 ms  (+ 16.4 ms in 0 steps since start of marking, biggest step 0.0 ms, walltime since start of marking 215 ms) (average mu = 0.963, current mu = 0.963) finalize incremental marking via stack guard; GC in old space requested
+   3.59| [1:0xffffb8760000]     1428 ms: Young generation mutator utilization = 0.489 (mutator_speed=232108, gc_speed=222501)
+   3.59| [1:0xffffb8760000]     1428 ms: Scavenge 80.7 (98.8) -> 75.8 (98.8) MB, pooled: 0 MB, 73.50 / 0.00 ms  (average mu = 0.963, current mu = 0.963) allocation failure; 
+   3.72| [1:0xffffb8760000]     1556 ms: Young generation mutator utilization = 0.552 (mutator_speed=229314, gc_speed=282753)
+   3.72| [1:0xffffb8760000]     1556 ms: Scavenge 83.1 (101.2) -> 81.7 (113.0) MB, pooled: 0 MB, 109.62 / 0.00 ms  (average mu = 0.963, current mu = 0.963) allocation failure; 
+   3.88| [1:0xffffb8760000]     1721 ms: Young generation mutator utilization = 0.520 (mutator_speed=223126, gc_speed=241351)
+   3.88| [1:0xffffb8760000]     1721 ms: Scavenge 99.8 (118.3) -> 96.3 (122.3) MB, pooled: 0 MB, 96.54 / 0.00 ms  (average mu = 0.963, current mu = 0.963) allocation failure; 
+   3.96| [1:0xffffb8760000]     1801 ms: Young generation mutator utilization = 0.502 (mutator_speed=216559, gc_speed=218654)
+   3.96| [1:0xffffb8760000]     1801 ms: Scavenge 106.7 (125.1) -> 104.6 (134.6) MB, pooled: 0 MB, 44.83 / 0.00 ms  (average mu = 0.963, current mu = 0.963) allocation failure; 
+   5.17| [1:0xffffb8760000]     3009 ms: Young generation mutator utilization = 0.787 (mutator_speed=60258, gc_speed=223112)
+   5.17| [1:0xffffb8760000]     3009 ms: Scavenge 119.0 (138.8) -> 116.0 (144.3) MB, pooled: 0 MB, 47.46 / 0.00 ms  (average mu = 0.963, current mu = 0.963) task; 
+   5.28| [1:0xffffb8760000]     3124 ms: Young generation mutator utilization = 0.806 (mutator_speed=55233, gc_speed=229591)
+   5.28| [1:0xffffb8760000]     3124 ms: Scavenge 129.2 (148.1) -> 126.6 (155.6) MB, pooled: 0 MB, 41.67 / 0.00 ms  (average mu = 0.963, current mu = 0.963) allocation failure; 
+   5.34| [1:0xffffb8760000]     3179 ms: Young generation mutator utilization = 0.802 (mutator_speed=57943, gc_speed=234618)
+   5.34| [1:0xffffb8760000]     3179 ms: Scavenge 140.7 (159.9) -> 137.9 (166.4) MB, pooled: 0 MB, 25.77 / 0.00 ms  (average mu = 0.963, current mu = 0.963) allocation failure; 
+   5.42| [1:0xffffb8760000]     3258 ms: Young generation mutator utilization = 0.809 (mutator_speed=54944, gc_speed=233444)
+   5.42| [1:0xffffb8760000]     3258 ms: Scavenge 151.3 (170.5) -> 148.7 (177.7) MB, pooled: 0 MB, 44.32 / 0.00 ms  (average mu = 0.963, current mu = 0.963) allocation failure; 
+   5.47| [1:0xffffb8760000]     3312 ms: Young generation mutator utilization = 0.792 (mutator_speed=60260, gc_speed=229465)
+   5.47| [1:0xffffb8760000]     3312 ms: Scavenge 162.4 (181.9) -> 159.5 (188.9) MB, pooled: 0 MB, 39.05 / 0.00 ms  (average mu = 0.963, current mu = 0.963) allocation failure; 
+   5.53| [1:0xffffb8760000]     3375 ms: Young generation mutator utilization = 0.779 (mutator_speed=65957, gc_speed=232686)
+   5.54| [1:0xffffb8760000]     3375 ms: Scavenge 173.2 (192.9) -> 170.4 (199.9) MB, pooled: 0 MB, 48.15 / 0.00 ms  (average mu = 0.963, current mu = 0.963) allocation failure; 
+   5.66| [1:0xffffb8760000]     3494 ms: Young generation mutator utilization = 0.791 (mutator_speed=62937, gc_speed=238143)
+   5.66| [1:0xffffb8760000]     3494 ms: Scavenge 184.2 (204.0) -> 181.5 (211.0) MB, pooled: 0 MB, 85.26 / 0.00 ms  (average mu = 0.963, current mu = 0.963) allocation failure; 
+   5.87| [1:0xffffb8760000]     3708 ms: Young generation mutator utilization = 0.789 (mutator_speed=63405, gc_speed=236992)
+   5.87| [1:0xffffb8760000]     3708 ms: Scavenge 195.1 (215.1) -> 192.5 (222.6) MB, pooled: 0 MB, 136.75 / 0.00 ms  (average mu = 0.963, current mu = 0.963) allocation failure; 
+   6.06| [1:0xffffb8760000]     3896 ms: Young generation mutator utilization = 0.787 (mutator_speed=60774, gc_speed=224682)
+   6.06| [1:0xffffb8760000]     3896 ms: Scavenge 206.0 (226.2) -> 203.1 (233.5) MB, pooled: 0 MB, 106.25 / 0.00 ms  (average mu = 0.963, current mu = 0.963) allocation failure; 
+   6.30| [1:0xffffb8760000]     4143 ms: Young generation mutator utilization = 0.796 (mutator_speed=56763, gc_speed=222145)
+   6.30| [1:0xffffb8760000]     4143 ms: Scavenge 213.2 (236.2) -> 211.2 (243.4) MB, pooled: 0 MB, 104.12 / 0.00 ms  (average mu = 0.963, current mu = 0.963) task; 
+   6.41| [1:0xffffb8760000]     4248 ms: Young generation mutator utilization = 0.551 (mutator_speed=161975, gc_speed=198888)
+   6.41| [1:0xffffb8760000]     4249 ms: Scavenge 227.5 (248.1) -> 224.2 (253.6) MB, pooled: 0 MB, 18.28 / 0.00 ms  (average mu = 0.963, current mu = 0.963) allocation failure; 
+   6.44| [1:0xffffb8760000]     4285 ms: Young generation mutator utilization = 0.546 (mutator_speed=174194, gc_speed=209404)
+   6.44| [1:0xffffb8760000]     4285 ms: Scavenge 231.8 (255.4) -> 230.3 (263.9) MB, pooled: 0 MB, 27.53 / 0.00 ms  (average mu = 0.963, current mu = 0.963) task; 
+   6.50| [1:0xffffb8760000]     4345 ms: Young generation mutator utilization = 0.548 (mutator_speed=173625, gc_speed=210722)
+   6.50| [1:0xffffb8760000]     4345 ms: Scavenge 248.2 (269.1) -> 244.5 (273.6) MB, pooled: 0 MB, 13.00 / 0.00 ms  (average mu = 0.963, current mu = 0.963) allocation failure; 
+   6.57| [1:0xffffb8760000]     4407 ms: Young generation mutator utilization = 0.559 (mutator_speed=168777, gc_speed=214001)
+   6.57| [1:0xffffb8760000]     4407 ms: Scavenge (interleaved) 255.4 (276.5) -> 253.2 (285.5) MB, pooled: 0 MB, 23.07 / 0.00 ms  (average mu = 0.963, current mu = 0.963) allocation failure; 
+   6.94| [1:0xffffb8760000]     4783 ms: Young generation mutator utilization = 0.647 (mutator_speed=120886, gc_speed=221945)
+   6.94| [1:0xffffb8760000]     4783 ms: Scavenge (interleaved) 268.9 (290.3) -> 265.6 (296.1) MB, pooled: 0 MB, 132.22 / 0.00 ms  (average mu = 0.963, current mu = 0.963) allocation failure; 
+   7.21| [1:0xffffb8760000]     5056 ms: Mark-Compact 268.1 (296.1) -> 267.6 (305.6) MB, pooled: 0 MB, 23.05 / 0.00 ms  (+ 417.0 ms in 0 steps since start of marking, biggest step 0.0 ms, walltime since start of marking 701 ms) (average mu = 0.904, current mu = 0.883) finalize incremental marking via stack guard; GC in old space requested
+   7.41| [1:0xffffb8760000]     5249 ms: Young generation mutator utilization = 0.705 (mutator_speed=80351, gc_speed=191837)
+   7.41| [1:0xffffb8760000]     5249 ms: Scavenge 290.9 (313.1) -> 286.3 (313.1) MB, pooled: 0 MB, 17.46 / 0.00 ms  (average mu = 0.904, current mu = 0.883) allocation failure; 
+   7.47| [1:0xffffb8760000]     5307 ms: Young generation mutator utilization = 0.710 (mutator_speed=80803, gc_speed=198138)
+   7.47| [1:0xffffb8760000]     5307 ms: Scavenge 293.1 (315.2) -> 291.7 (327.0) MB, pooled: 0 MB, 45.77 / 0.00 ms  (average mu = 0.904, current mu = 0.883) allocation failure; 
+   7.49| [1:0xffffb8760000]     5331 ms: Young generation mutator utilization = 0.704 (mutator_speed=89379, gc_speed=212604)
+   7.49| [1:0xffffb8760000]     5331 ms: Scavenge 310.2 (332.6) -> 306.5 (336.3) MB, pooled: 0 MB, 7.55 / 0.00 ms  (average mu = 0.904, current mu = 0.883) allocation failure; 
+   7.51| [1:0xffffb8760000]     5355 ms: Young generation mutator utilization = 0.721 (mutator_speed=102749, gc_speed=265929)
+   7.51| [1:0xffffb8760000]     5355 ms: Scavenge 316.8 (339.1) -> 314.7 (348.4) MB, pooled: 0 MB, 14.81 / 0.00 ms  (average mu = 0.904, current mu = 0.883) allocation failure; 
+   7.56| [1:0xffffb8760000]     5405 ms: Young generation mutator utilization = 0.746 (mutator_speed=111592, gc_speed=328574)
+   7.56| [1:0xffffb8760000]     5405 ms: Scavenge 330.9 (353.4) -> 327.6 (359.2) MB, pooled: 0 MB, 32.47 / 0.00 ms  (average mu = 0.904, current mu = 0.883) allocation failure; 
+   7.60| [1:0xffffb8760000]     5438 ms: Young generation mutator utilization = 0.779 (mutator_speed=114313, gc_speed=403656)
+   7.60| [1:0xffffb8760000]     5438 ms: Scavenge 339.5 (362.4) -> 337.1 (370.6) MB, pooled: 0 MB, 17.63 / 0.00 ms  (average mu = 0.904, current mu = 0.883) allocation failure; 
+   7.62| [1:0xffffb8760000]     5464 ms: Young generation mutator utilization = 0.777 (mutator_speed=116607, gc_speed=406059)
+   7.62| [1:0xffffb8760000]     5464 ms: Scavenge 352.0 (374.9) -> 349.0 (381.2) MB, pooled: 0 MB, 13.04 / 0.00 ms  (average mu = 0.904, current mu = 0.883) allocation failure; 
+   7.68| [1:0xffffb8760000]     5519 ms: Young generation mutator utilization = 0.782 (mutator_speed=120098, gc_speed=430291)
+   7.68| [1:0xffffb8760000]     5519 ms: Scavenge 361.9 (385.0) -> 359.3 (392.8) MB, pooled: 0 MB, 26.32 / 0.00 ms  (average mu = 0.904, current mu = 0.883) allocation failure; 
+   7.73| [1:0xffffb8760000]     5571 ms: Young generation mutator utilization = 0.720 (mutator_speed=161439, gc_speed=416009)
+   7.73| [1:0xffffb8760000]     5571 ms: Scavenge 373.6 (397.1) -> 370.8 (404.1) MB, pooled: 0 MB, 15.11 / 0.00 ms  (average mu = 0.904, current mu = 0.883) allocation failure; 
+   7.77| [1:0xffffb8760000]     5611 ms: Young generation mutator utilization = 0.594 (mutator_speed=289873, gc_speed=424970)
+   7.77| [1:0xffffb8760000]     5611 ms: Scavenge 383.9 (407.5) -> 381.2 (415.0) MB, pooled: 0 MB, 18.35 / 0.00 ms  (average mu = 0.904, current mu = 0.883) allocation failure; 
+   7.80| [1:0xffffb8760000]     5646 ms: Young generation mutator utilization = 0.571 (mutator_speed=495799, gc_speed=658649)
+   7.80| [1:0xffffb8760000]     5646 ms: Scavenge 395.3 (419.1) -> 392.5 (426.3) MB, pooled: 0 MB, 16.84 / 0.00 ms  (average mu = 0.904, current mu = 0.883) allocation failure; 
+   7.81| [5.2s] burst done chunks=62 rss=474.6MB heapTotal=426.6MB heapUsed=396.2MB
+   9.81| [7.2s] idle rss=474.6MB heapTotal=426.6MB heapUsed=396.2MB
+  11.08| [1:0xffffb8760000]     8923 ms: Young generation mutator utilization = 0.962 (mutator_speed=26602, gc_speed=668509)
+  11.08| [1:0xffffb8760000]     8923 ms: Memory reducer: high alloc, foreground
+  11.08| [1:0xffffb8760000]     8924 ms: Memory reducer: waiting for 8000 ms
+  11.81| [9.2s] idle rss=474.6MB heapTotal=426.6MB heapUsed=396.2MB
+  13.82| [11.2s] idle rss=474.6MB heapTotal=426.6MB heapUsed=396.2MB
+  15.82| [13.2s] idle rss=474.6MB heapTotal=426.6MB heapUsed=396.2MB
+  17.83| [15.2s] idle rss=474.6MB heapTotal=426.6MB heapUsed=396.3MB
+  19.18| [1:0xffffb8760000]    17026 ms: Young generation mutator utilization = 0.990 (mutator_speed=6828, gc_speed=668509)
+  19.18| [1:0xffffb8760000]    17026 ms: Memory reducer: high alloc, foreground
+  19.18| [1:0xffffb8760000]    17026 ms: Memory reducer: waiting for 8000 ms
+  19.83| [17.2s] idle rss=474.6MB heapTotal=426.6MB heapUsed=396.3MB
+  21.83| [19.2s] idle rss=474.6MB heapTotal=426.6MB heapUsed=396.3MB
+  23.83| [21.2s] idle rss=474.6MB heapTotal=426.6MB heapUsed=396.3MB
+  25.84| [23.2s] idle rss=474.6MB heapTotal=426.6MB heapUsed=396.3MB
+  27.28| [1:0xffffb8760000]    25127 ms: Young generation mutator utilization = 0.995 (mutator_speed=3649, gc_speed=668509)
+  27.28| [1:0xffffb8760000]    25127 ms: Old generation mutator utilization = 0.976 (mutator_speed=4615, gc_speed=187518)
+  27.28| [1:0xffffb8760000]    25127 ms: Memory reducer: high alloc, foreground
+  27.28| [1:0xffffb8760000]    25127 ms: Memory reducer: waiting for 8000 ms
+  27.84| [25.2s] idle rss=474.6MB heapTotal=426.6MB heapUsed=396.3MB
+  29.85| [27.2s] idle rss=474.6MB heapTotal=426.6MB heapUsed=396.3MB
+  31.85| [29.2s] idle rss=474.6MB heapTotal=426.6MB heapUsed=396.3MB
+  33.86| [31.2s] idle rss=474.6MB heapTotal=426.6MB heapUsed=396.4MB
+  35.39| [1:0xffffb8760000]    33234 ms: Young generation mutator utilization = 0.997 (mutator_speed=2172, gc_speed=668509)
+  35.39| [1:0xffffb8760000]    33235 ms: Old generation mutator utilization = 0.986 (mutator_speed=2732, gc_speed=187518)
+  35.39| [1:0xffffb8760000]    33235 ms: Memory reducer: high alloc, foreground
+  35.39| [1:0xffffb8760000]    33235 ms: Memory reducer: waiting for 8000 ms
+  35.86| [33.2s] idle rss=474.6MB heapTotal=426.6MB heapUsed=396.4MB
+  37.87| [35.2s] idle rss=460.3MB heapTotal=426.6MB heapUsed=396.4MB
+  39.87| [37.2s] idle rss=460.7MB heapTotal=426.6MB heapUsed=396.4MB
+  41.88| [39.3s] idle rss=460.7MB heapTotal=426.6MB heapUsed=396.4MB
+  43.50| [1:0xffffb8760000]    41340 ms: Young generation mutator utilization = 0.998 (mutator_speed=1446, gc_speed=668509)
+  43.50| [1:0xffffb8760000]    41340 ms: Old generation mutator utilization = 0.990 (mutator_speed=1857, gc_speed=187518)
+  43.50| [1:0xffffb8760000]    41340 ms: Memory reducer: high alloc, foreground
+  43.50| [1:0xffffb8760000]    41340 ms: Memory reducer: waiting for 8000 ms
+  43.88| [41.3s] idle rss=460.7MB heapTotal=426.6MB heapUsed=396.4MB
+  45.88| [43.3s] idle rss=460.7MB heapTotal=426.6MB heapUsed=396.4MB
+  47.89| [45.3s] idle rss=460.7MB heapTotal=426.6MB heapUsed=396.4MB
+  49.89| [47.3s] idle rss=460.7MB heapTotal=426.6MB heapUsed=396.4MB
+  51.60| [1:0xffffb8760000]    49443 ms: Young generation mutator utilization = 0.999 (mutator_speed=940, gc_speed=668509)
+  51.60| [1:0xffffb8760000]    49444 ms: Old generation mutator utilization = 0.994 (mutator_speed=1220, gc_speed=187518)
+  51.60| [1:0xffffb8760000]    49444 ms: Embedder mutator utilization = 1.000 (mutator_speed=1, gc_speed=0)
+  51.60| [1:0xffffb8760000]    49444 ms: Memory reducer: low alloc, foreground
+  51.60| [1:0xffffb8760000]    49444 ms: Memory reducer: started GC #1
+  51.69| [1:0xffffb8760000]    49529 ms: Memory reducer: finished GC #1 (will do more)
+  51.69| [1:0xffffb8760000]    49529 ms: Mark-Compact (reduce) 396.4 (426.6) -> 3.6 (10.4) MB, pooled: 0 MB, 45.49 / 0.00 ms  (+ 0.5 ms in 0 steps since start of marking, biggest step 0.0 ms, walltime since start of marking 85 ms) (average mu = 0.994, current mu = 0.999) finalize incremental marking via task; GC in old space requested
+  51.89| [49.3s] idle rss=39.4MB heapTotal=10.4MB heapUsed=3.6MB
+  52.29| [1:0xffffb8760000]    50129 ms: Young generation mutator utilization = 0.999 (mutator_speed=497, gc_speed=668509)
+  52.29| [1:0xffffb8760000]    50129 ms: Old generation mutator utilization = 0.998 (mutator_speed=701, gc_speed=312845)
+  52.29| [1:0xffffb8760000]    50129 ms: Embedder mutator utilization = 1.000 (mutator_speed=1, gc_speed=0)
+  52.29| [1:0xffffb8760000]    50130 ms: Memory reducer: low alloc, foreground
+  52.29| [1:0xffffb8760000]    50130 ms: Memory reducer: started GC #2
+  52.29| [1:0xffffb8760000]    50133 ms: Memory reducer: finished GC #2 (done)
+  52.29| [1:0xffffb8760000]    50133 ms: Mark-Compact (reduce) 3.6 (10.4) -> 3.6 (5.4) MB, pooled: 0 MB, 1.82 / 0.00 ms  (+ 1.4 ms in 0 steps since start of marking, biggest step 0.0 ms, walltime since start of marking 4 ms) (average mu = 0.994, current mu = 0.995) finalize incremental marking via task; GC in old space requested
+  53.90| [51.3s] idle rss=37.7MB heapTotal=5.4MB heapUsed=3.6MB
+  55.90| [53.3s] idle rss=37.7MB heapTotal=5.4MB heapUsed=3.6MB
+  57.90| [55.3s] idle rss=37.7MB heapTotal=5.4MB heapUsed=3.6MB
+  59.91| [57.3s] idle rss=37.7MB heapTotal=5.4MB heapUsed=3.6MB
+  61.91| [59.3s] idle rss=37.7MB heapTotal=5.4MB heapUsed=3.6MB
+  63.91| [61.3s] idle rss=37.7MB heapTotal=5.4MB heapUsed=3.6MB
+  65.92| [63.3s] idle rss=37.7MB heapTotal=5.4MB heapUsed=3.6MB
+  67.92| [65.3s] idle rss=37.7MB heapTotal=5.4MB heapUsed=3.6MB
+  69.93| [67.3s] idle rss=37.7MB heapTotal=5.4MB heapUsed=3.6MB
+  71.94| [69.3s] idle rss=37.7MB heapTotal=5.4MB heapUsed=3.6MB
+  73.94| [71.3s] idle rss=37.7MB heapTotal=5.4MB heapUsed=3.6MB
+  75.95| [73.3s] idle rss=37.7MB heapTotal=5.4MB heapUsed=3.6MB
+  77.95| [75.3s] idle rss=37.7MB heapTotal=5.4MB heapUsed=3.6MB
+  79.96| [77.3s] idle rss=37.7MB heapTotal=5.4MB heapUsed=3.6MB
+  81.96| [79.3s] idle rss=17.6MB heapTotal=5.4MB heapUsed=3.6MB
+  83.97| [81.3s] idle rss=18.1MB heapTotal=5.4MB heapUsed=3.6MB
+  85.97| [83.3s] idle rss=18.1MB heapTotal=5.4MB heapUsed=3.7MB
+  87.97| [85.3s] idle rss=18.1MB heapTotal=5.4MB heapUsed=3.7MB
+  89.97| [87.4s] idle rss=18.1MB heapTotal=5.4MB heapUsed=3.7MB
+  91.98| [89.4s] idle rss=18.1MB heapTotal=5.4MB heapUsed=3.7MB
+  93.98| [91.4s] idle rss=18.1MB heapTotal=5.4MB heapUsed=3.7MB
+  95.99| [93.4s] idle rss=18.1MB heapTotal=5.4MB heapUsed=3.7MB
+  97.99| [95.4s] idle rss=18.1MB heapTotal=5.4MB heapUsed=3.7MB
+  99.99| [97.4s] idle rss=18.1MB heapTotal=5.4MB heapUsed=3.7MB
+ 102.00| [99.4s] idle rss=18.1MB heapTotal=5.4MB heapUsed=3.7MB
+ 104.00| [101.4s] idle rss=18.1MB heapTotal=5.4MB heapUsed=3.7MB
+ 106.00| [103.4s] idle rss=18.1MB heapTotal=5.4MB heapUsed=3.7MB
+ 108.01| [105.4s] idle rss=18.1MB heapTotal=5.4MB heapUsed=3.7MB
+ 110.01| [107.4s] idle rss=18.1MB heapTotal=5.4MB heapUsed=3.7MB
+ 112.01| [109.4s] idle rss=18.1MB heapTotal=5.4MB heapUsed=3.7MB
+ 114.02| [111.4s] idle rss=18.1MB heapTotal=5.4MB heapUsed=3.7MB
+ 116.02| [113.4s] idle rss=18.1MB heapTotal=5.4MB heapUsed=3.7MB
+ 118.02| [115.4s] idle rss=18.1MB heapTotal=5.4MB heapUsed=3.7MB
+ 120.03| [117.4s] idle rss=18.1MB heapTotal=5.4MB heapUsed=3.7MB
+ 122.03| [119.4s] idle rss=18.1MB heapTotal=5.4MB heapUsed=3.7MB
+ 124.03| [121.4s] idle rss=18.1MB heapTotal=5.4MB heapUsed=3.7MB
+ 126.04| [123.4s] idle rss=18.1MB heapTotal=5.4MB heapUsed=3.7MB
+ 128.04| [125.4s] idle rss=17.5MB heapTotal=5.4MB heapUsed=3.7MB
+ 130.05| [127.4s] idle rss=18.0MB heapTotal=5.4MB heapUsed=3.7MB
+ 132.05| [129.4s] idle rss=18.0MB heapTotal=5.4MB heapUsed=3.7MB
+ 134.06| [131.4s] idle rss=18.0MB heapTotal=5.4MB heapUsed=3.7MB
+ 136.06| [133.4s] idle rss=18.0MB heapTotal=5.4MB heapUsed=3.7MB
+ 138.07| [135.4s] idle rss=18.0MB heapTotal=5.4MB heapUsed=3.7MB
+ 140.07| [137.4s] idle rss=18.0MB heapTotal=5.4MB heapUsed=3.7MB
+ 142.08| [139.5s] idle rss=18.0MB heapTotal=5.4MB heapUsed=3.7MB
+ 144.09| [141.5s] idle rss=18.0MB heapTotal=5.4MB heapUsed=3.7MB
+ 146.09| [143.5s] idle rss=18.0MB heapTotal=5.4MB heapUsed=3.7MB
+ 148.09| [145.5s] idle rss=18.0MB heapTotal=5.4MB heapUsed=3.7MB
+ 150.10| [147.5s] idle rss=18.2MB heapTotal=5.4MB heapUsed=3.7MB
+ 152.10| [149.5s] idle rss=18.2MB heapTotal=5.4MB heapUsed=3.7MB
+ 154.11| [151.5s] idle rss=18.2MB heapTotal=5.4MB heapUsed=3.7MB
+ 156.11| [153.5s] idle rss=18.2MB heapTotal=5.4MB heapUsed=3.8MB
+ 158.11| [155.5s] idle rss=18.2MB heapTotal=5.4MB heapUsed=3.8MB
+ 158.11| [155.5s] end rss=19.1MB heapTotal=5.4MB heapUsed=3.8MB
