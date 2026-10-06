@@ -2,14 +2,17 @@
 
 Minimal, dependency-free reproduction of a V8 GC-heuristic regression that reaches Node.js 24 and 26.
 
-**TL;DR.** After an allocation burst followed by idle, Node 22 (V8 12.4) runs a memory-reducing GC
-within tens of seconds and returns memory to the OS. Node 24 (V8 13.6) and 26 (V8 14.6) report
-`Memory reducer: high alloc` on every tick and only collect when the reducer's 100 s watchdog fires —
-or never, if something else triggers an ordinary major GC first. Cause: since V8 CL
-[5935313](https://chromium-review.googlesource.com/c/v8/v8/+/5935313) the embedder (cppgc) allocation
-throughput has no lower bound, so a process that never allocates on cppgc (any plain-JS Node workload)
-reports exactly `0`, which `Heap::ComputeMutatorUtilizationImpl()` treats as *maximal* allocation.
-A 3-line patch to `Heap::HasLowEmbedderAllocationRate()` fixes it (verified with a patched build).
+**TL;DR.** In the workloads tested here, Node 24 (V8 13.6) and 26 (V8 14.6) report
+`Memory reducer: high alloc` during idle because the sampled cppgc (embedder) allocation throughput is
+exactly zero, which `Heap::ComputeMutatorUtilizationImpl()` treats as maximal allocation. The reducer's
+low-allocation condition therefore cannot start a GC; only its 100 s watchdog (or other
+memory-optimization conditions) can, and an ordinary major GC in the meantime postpones the watchdog
+by resetting its clock. Node 22 (V8 12.4) used an older throughput calculation with a 1 B/ms floor that
+avoids the zero case. Cause: V8 CL [5935313](https://chromium-review.googlesource.com/c/v8/v8/+/5935313).
+
+A 3-line patch treating zero embedder throughput as low allocation restores prompt reducer GCs in all
+three tested Node 24 idle modes; builds from the same Dockerfile with and without the patch provide the
+control comparison below.
 
 ```
 node --trace-gc --trace-memory-reducer --trace-mutator-utilization repro.js [log|trickle|silent|vm-once|vm-periodic|vm-once-reburst]
@@ -18,9 +21,9 @@ node --trace-gc --trace-memory-reducer --trace-mutator-utilization repro.js [log
 
 | first `Mark-Compact (reduce)` after the burst | 22.23.3 | 24.21.0 | 26.10.0 | 24.21.0 + patch |
 |---|---|---|---|---|
-| idle: 2 s logging timer | 44 s | 100 s (watchdog) | 97 s (watchdog) | **11 s** (control build: 100 s) |
-| idle: + 64 KB garbage / 100 ms | 36 s | **never in 150 s, RSS 700 MB** | 122 s (watchdog) | 11 s (control: 140 s) |
-| idle: one 150 s timer | 44 s | 100 s (watchdog) | 98 s (watchdog) | 11 s (control: 100 s) |
+| idle: 2 s logging timer | 44 s | 100 s (watchdog) | 97 s (watchdog) | **11.3 s** (control build: 100.5 s) |
+| idle: + 64 KB garbage / 100 ms | 36 s | **none in 150 s, RSS 700 MB** | 122 s (watchdog) | 11.3 s (control: 140.9 s) |
+| idle: one 150 s timer | 44 s | 100 s (watchdog) | 98 s (watchdog) | 11.4 s (control: 100.5 s) |
 
 Investigation date: 2026-10-06. Upstream reports: V8 <TBD>, nodejs/node <TBD>.
 
@@ -30,7 +33,7 @@ Investigation date: 2026-10-06. Upstream reports: V8 <TBD>, nodejs/node <TBD>.
 |---|---|
 | `repro.js` | Standalone repro (no deps) |
 | `run.sh` | `./run.sh <node-version> <idle-mode> [extra node flags]` → runs in `node:<v>-bookworm-slim` (or `IMAGE=…`), writes `traces/…log` with host-elapsed-seconds prefix |
-| `traces/` | Raw outputs: 3 Node versions × 3 idle modes, flag experiments, patched and control from-source Node 24 builds |
+| `traces/` | Raw outputs: 3 Node versions × 3 idle modes, flag experiments, `vm-*` modes, patched and control from-source Node 24 builds. Harness revision: `repro.js` at the commit that added each trace (see `git log -- traces/<file>`); `vm-*` modes were added after the baseline/flag runs. |
 | `patch/` | Proposed fix (`0001-…patch`, paths are `deps/v8/…`; use `src/heap/heap.cc` for upstream) + `Dockerfile` that builds Node 24.21.0 with (`APPLY_PATCH=1`) or without (`APPLY_PATCH=0`) it |
 
 Source references below are to `deps/v8/src/heap/` at the nodejs/node tags
@@ -110,20 +113,25 @@ Measured on the official `node:24.21.0` image (`traces/24.21.0-vm-*.log`):
 | mode | what | result |
 |---|---|---|
 | `vm-once` | one `new vm.Script('1')` at startup, then burst + idle | `low alloc` on 2nd tick, reduce GC **11 s** after burst — same as the patched build |
-| `vm-periodic` | same, plus a `vm.Script` every 30 s during idle | 11 s |
-| `vm-once-reburst` | `vm-once`, then a second burst at ~130 s | first burst: 11 s. **Second burst: `high alloc` on every tick to the end of the run (80 s later)**, `Embedder mutator utilization = 0.000 (mutator_speed=0, gc_speed=1)` again |
+| `vm-once-reburst` | `vm-once`, then a second burst at ~130 s, ~80 s more observation | first burst: 11 s. **Second burst: `high alloc` on every tick to the end of the run**, `Embedder mutator utilization = 0.000 (mutator_speed=0, gc_speed=1)` again (`vm-once-reburst.log:384-475`) |
+| `vm-periodic` | `vm-once` plus a `vm.Script` every 30 s during idle | 11 s — but the first periodic allocation only fires at ~35 s, after both reducer GCs, so this run only shows the startup allocation's effect |
+| `vm-periodic-reburst` | `vm-periodic` plus the second burst | first burst 11 s; **second burst also `low alloc` on the 2nd tick, reduce GC 11 s after it** (`vm-periodic-reburst.log`, t=146.4) |
 
-So any positive cppgc throughput, however small, passes the 0.993 test (`gc_speed/(tiny + gc_speed)`),
-and a single `vm.Script` compile is enough to unstick the reducer — **for about 110 s**. The tracker
-decays by `exp2(-elapsed/100 ms)`; after ~1100 half-lives the double underflows to exactly `0.0` and the
-`mutator_speed == 0` early return is back. In `vm-once-reburst` the one-shot allocation is ~130 s old
-when the second burst ends, and the trace shows exactly that. (This also demonstrates the
-"exact-zero after long idle" behaviour of `SmoothedBytesAndDuration` empirically; see Unverified notes
-for why it probably doesn't bite the young/old terms.)
+So a startup `vm.Script` allocation enables low-allocation-triggered reducer GCs in these Node 24 runs,
+and the `vm-once-reburst` run shows the benefit does not persist through a long idle interval: after
+the second burst the embedder term is back at exactly zero despite the earlier cppgc allocation. That is
+consistent with floating-point underflow in the exponential-decay tracker (`exp2(-elapsed/100 ms)`);
+the trace does not resolve the precise time at which the value reaches zero, and the tracker is only
+updated when sampled. With a `vm.Script` every 30 s (`vm-periodic-reburst`) the reducer also recovers
+after the second burst.
 
-Practical consequence: a userland stopgap exists — compile a trivial `vm.Script` on an interval shorter
-than ~100 s (or per request). Ugly, but it is the only JS-reachable lever found that fixes the heuristic
-without changing heap sizing. First noticed independently in Ghost by allocating a `vm.Script`.
+Two consequences:
+- A sufficiently small positive throughput passes the test: for embedder GC speed `g` the condition is
+  `rate < (0.007/0.993)·g`, and with `g` floored at 1 B/ms (no embedder GC ever recorded) that is
+  ~0.007 B/ms — which a decayed value a few seconds after any allocation easily satisfies.
+- A userland stopgap exists — compile a trivial `vm.Script` on an interval — and is demonstrated here
+  for a 30 s interval and one reburst. The required frequency and its cost are not otherwise measured.
+  First noticed independently in Ghost by allocating a `vm.Script`.
 
 ### Other ways the reducer can start (none apply to the repro)
 
@@ -189,23 +197,24 @@ Notes:
 - **`trickle` on 24**: a regular (non-reduce) `Mark-Compact` at 96.8 s ("finalize incremental marking via
   task"; what started marking is not in the trace — needs `--trace-incremental-marking`) resets
   `last_gc_time_ms`, so the watchdog cannot fire before ~197 s. It reports `pooled: 746 MB` and RSS stays
-  ~700 MB to the end of the 150 s run. A reduce GC releases pooled pages (`heap.cc:1139-1141`); a
-  regular one keeps them. The run does not show what happens after 197 s.
-- **`trickle` on 26**: regular MC at 25.5 s (`pooled: 650.8 MB`), RSS stays 699 MB until ~95 s, then
-  drops to 96 MB with no GC logged at that time (`traces/26.10.0-trickle.log`). Not investigated
-  (possibly delayed pool release); watchdog reduce GC at 127 s finds 4 MB live.
+  ~700 MB to the end of the 150 s run. A reduce GC releases pooled pages (`heap.cc:1139-1141`); this
+  regular one kept them. The run does not show what happens after 197 s.
+- **`trickle` on 26**: regular MC at 25.5 s (`pooled: 650.8 MB`); RSS stays 699 MB afterwards. A
+  scavenge at 93.5 s process time (`traces/26.10.0-trickle.log:166`) reduces heap capacity 76.6 → 13.6 MB
+  and reports `pooled: 63.0 MB`; the next RSS sample is 95.8 MB. The allocator/OS contribution to that
+  drop is not established. Watchdog reduce GC at 127 s finds 4 MB live.
 
 Decisive trace lines (verbatim from `traces/24.21.0-log.log:58-62` and `traces/22.23.3-log.log`):
 
 ```
 # Node 24.21.0 (V8 13.6.233.17) — every 8 s tick during idle
-16282 ms: Young generation mutator utilization = 1.000 (mutator_speed=1, gc_speed=18662)
+16282 ms: Young generation mutator utilization = 1.000 (mutator_speed=1, gc_speed=186622)
 16283 ms: Old generation mutator utilization = 1.000 (mutator_speed=2, gc_speed=905860)
 16283 ms: Embedder mutator utilization = 0.000 (mutator_speed=0, gc_speed=1)
 16283 ms: Memory reducer: high alloc, foreground
 16283 ms: Memory reducer: waiting for 8000 ms
 ...
-105424 ms: Memory reducer: started GC #1          <- watchdog, 100 s after the last major GC (t=1.09 s)
+105424 ms: Memory reducer: started GC #1          <- watchdog: >100 s since the last major GC (t=1.09 s), at the next 8 s tick
 105559 ms: Mark-Compact (reduce) 681.6 (777.1) -> 4.3 (20.6) MB
 
 # Node 22.23.3 (V8 12.4.254.21)
@@ -225,7 +234,7 @@ Decisive trace lines (verbatim from `traces/24.21.0-log.log:58-62` and `traces/2
 | `--gc-memory-reducer-start-delay-ms=1000` | no change (107 s) | no change (107 s) | shortens the initial wait; ticks still `high alloc` |
 | `--memory-reducer-delay-ms=1000` (26 only) | — | no change (102 s) | tick every 1 s instead of 8 s; still `high alloc` |
 | `--optimize-for-size` | reducer GC 8 s after burst; RSS 29 MB | 25 s after burst; RSS 30 MB | `Isolate::MemorySaverModeEnabled()` returns true under this flag → `ShouldOptimizeForMemoryUsage()` true → reducer runs as `background`. Side effects: semi-space capped at 1 MB and `GCFlagsForIncrementalMarking` turns ordinary incremental GCs into reduce GCs — 19 `(reduce)` MCs during the 5 s burst (not reducer-started; the 2 reducer GCs come after), burst got through 49 chunks vs 106. Cost is workload-dependent; heavy for this one. |
-| `--memory-saver-mode` | reducer GC 8 s after burst (`background`); RSS 32 MB | — | same `MemorySaverModeEnabled()` path. Still makes ordinary incremental GCs reduce GCs (18 `(reduce)` MCs during the burst) but no semi-space cap: burst got through 111 chunks vs 106 baseline, heapTotal peaked ~405 MB vs ~777 MB. **Closest thing to a usable workaround found**; one run, needs a real-workload cost check. |
+| `--memory-saver-mode` | reducer GC 8 s after burst (`background`); RSS 32 MB | — | same `MemorySaverModeEnabled()` path. Still makes ordinary incremental GCs reduce GCs (17 `(reduce)` MCs before `burst done`, 18th just after) but no semi-space cap: burst got through 111 chunks vs 106 baseline, heapTotal peaked 451 MB (405 MB at burst end) vs 777 MB. **Closest thing to a usable workaround found**; one run, needs a real-workload cost check. |
 
 No `--memory-reducer*` / `--gc-memory-reducer*` flag reaches `HasLowAllocationRate()`. From the
 embedder (C++) side, `Isolate::SetPriority(kBestEffort)` or `MemorySaverModeEnabled()` would also make
@@ -240,11 +249,10 @@ the reducer run; neither is exposed to JS by Node.
 if (embedder_allocation_rate == 0) return true;
 ```
 
-Exact zero is deliberate: any positive throughput still goes through the existing
-`gc_speed/(rate + gc_speed)` comparison, so an embedder that does allocate on cppgc is unaffected. The
-tracker cannot distinguish "never measured" from "measured zero"; both mean no cppgc allocation has
-been seen, which is a low allocation rate. Dry-run applies to v24.21.0 and to v8/v8 `main`
-(path `src/heap/heap.cc` upstream).
+Positive throughput keeps the existing `gc_speed/(rate + gc_speed)` comparison. Exactly-zero
+throughput is treated as low allocation, including a zero reached by decay after earlier allocation
+(the `vm-once-reburst` case). The tracker does not distinguish an uninitialized value from a measured or
+decayed zero. Dry-run applies to v24.21.0 and to v8/v8 `main` (path `src/heap/heap.cc` upstream).
 
 `patch/Dockerfile` builds Node 24.21.0 from the release tarball with the patch applied
 (`./configure --ninja`, default options). Result (`traces/24.21.0-patched-{log,trickle,silent}.log`,
@@ -264,23 +272,28 @@ First tick after the burst (t=8.2) is still `high alloc` (young/old terms still 
 **Control** — same Dockerfile with `APPLY_PATCH=0` (identical source, toolchain, configure flags;
 `traces/24.21.0-control-{log,trickle,silent}.log`):
 
-| idle mode | first reduce GC after burst end | RSS at 155 s |
-|---|---|---|
-| log | 100 s (watchdog, `high alloc` every tick) | 60 MB |
-| silent | 100 s (watchdog) | 59 MB |
-| trickle | regular MC at 42.6 s (`pooled: 1269 MB`) resets the clock; watchdog reduce GC at 145.9 s | 64 MB |
+Elapsed time from `burst done` to the first completed `Mark-Compact (reduce)` (host timestamps):
 
-Control behaves like the official binary; the only difference between control and patched is the
-3-line change. Burst throughput was ~1000 chunks for both from-source builds when the host was idle
-(see caveat below), so the earlier concern about build flags is moot.
+| idle mode | control (`APPLY_PATCH=0`) | patched | reducer decision before that GC |
+|---|---|---|---|
+| log | 100.46 s (watchdog) | 11.32 s | control: `high alloc` on every tick; patched: `low alloc` |
+| silent | 100.53 s (watchdog) | 11.35 s | same |
+| trickle | 140.90 s (regular MC at 42.6 s, `pooled: 1269 MB`, resets the clock; watchdog GC at 145.97 s process time) | 11.31 s | same |
 
-Caveat on chunk counts: the baseline runs (9 containers in parallel on the same host) got through
-~106 chunks in 5 s; runs with 3 containers in parallel got ~420 (official binary, `vm-*` modes, during a
-build), ~830 (patched) to ~1000 (control) with the host otherwise idle. Host contention, not build
-flags. Heap sizes differ accordingly; the comparison is about reducer behaviour, not throughput.
+The decision lines are the stronger evidence: the control prints `high alloc, foreground` immediately
+before each watchdog-triggered collection, the patched build prints `low alloc, foreground` before
+its collections. Control behaves like the official binary. This validates the behaviour change in this
+Node 24 repro; no patched Node 26 build was made and no regression testing beyond this repro was done.
 
-Alternative fix: skip the embedder term in `HasLowAllocationRate()` when `EmbedderAllocationCounter()`
-has never been non-zero. Equivalent for Node; the patch above is smaller.
+Method note: control and patched binaries were built with the same Dockerfile and configure settings,
+toggling `APPLY_PATCH`. Runs were not conducted under identical host contention (baseline: 9 containers
+in parallel, ~106 chunks per burst; `vm-*` modes: 3 in parallel during a build, ~420; patched: 829–850;
+control: 1005–1021), so chunk counts, heap sizes and throughput are recorded context, not controlled
+performance comparisons.
+
+Not equivalent: skipping the embedder term only while the isolate has *never* allocated on cppgc.
+`vm-once-reburst` shows the zero state recurring after earlier allocation; that variant would not cover
+it.
 
 Not a fix: restoring the 1 B/ms floor on allocation throughput alone (see mechanism section).
 
@@ -308,10 +321,9 @@ SmoothedBytesAndDuration OR "mutator utilization" OR "embedder allocation"` (23 
 
 ## Unverified notes
 
-- Underflow to exactly 0.0 after ~110 s without allocation is now demonstrated for the *embedder*
-  tracker (`vm-once-reburst`). The young/old trackers could in principle do the same, but a positive
-  rate passes the 0.993 test long before that, so a real failure there needs an explanation for why the
-  reducer didn't start earlier (e.g. it was in `kDone` and a later major GC re-armed it after >110 s of
-  no JS allocation — which no JS process does). Not observed.
+- Recurrence of the exact-zero state after earlier cppgc allocation is demonstrated (`vm-once-reburst`),
+  consistent with underflow in the exponential-decay tracker. Analogous underflow is mathematically
+  possible for the young/old trackers, but no resulting scheduling failure for those trackers has been
+  demonstrated here.
 - Whether Chromium is affected is not measured; Blink's cppgc allocation presumably keeps the embedder
   tracker non-zero but nothing here shows that.

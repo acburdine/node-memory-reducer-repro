@@ -1,7 +1,9 @@
 'use strict';
-// Minimal repro: V8 memory reducer never fires after an allocation burst on
-// Node 24/26 (V8 13.x/14.x), because the embedder (cppgc) allocation rate is
-// always 0 in Node, which ComputeMutatorUtilization reads as "high alloc".
+// Minimal repro: on Node 24/26 (V8 13.x/14.x) the memory reducer cannot start
+// through its low-allocation condition after an allocation burst when the
+// sampled embedder (cppgc) allocation throughput is exactly 0, which
+// ComputeMutatorUtilization reads as "high alloc". The baseline workload here
+// does not intentionally create cppgc-backed objects.
 //
 // Usage:
 //   node --trace-gc --trace-memory-reducer --trace-mutator-utilization repro.js [idle-mode]
@@ -9,16 +11,18 @@
 // idle-mode:
 //   log      (default) after the burst, only log process.memoryUsage() every 2 s
 //   trickle  same, plus allocate ~64 KB of short-lived objects every 100 ms
-//   silent   after the burst, allocate nothing at all (no JS logging; one timer)
+//   silent   after the burst, no recurring application callbacks (one timer, no JS logging)
 //   vm-once      like `log`, but compile one `vm.Script` at startup (a single cppgc allocation)
 //   vm-periodic  like `log`, plus compile a `vm.Script` every 30 s during idle
-//   vm-once-reburst  `vm-once`, then a second 5 s burst at ~130 s and 60 s more idle
+//   vm-once-reburst      `vm-once`, then a second 5 s burst at ~130 s and ~80 s more observation
+//   vm-periodic-reburst  `vm-periodic`, then the same second burst
 //
-// Expected:
+// Observed (see README):
 //   Node 22: "Memory reducer: ... low alloc" and a "Mark-Compact (reduce)" GC
-//            within ~10-20 s of idle; heapUsed/RSS drop.
-//   Node 24/26: "high alloc, foreground" on every tick and no GC until the
-//            memory reducer watchdog fires ~100 s after the last GC.
+//            ~40 s after the burst; heapUsed/RSS drop.
+//   Node 24/26: "high alloc, foreground" on every tick; the reduce GC waits for
+//            the watchdog (~100 s after the last major GC). Ordinary GCs can
+//            still occur and push the watchdog out further.
 
 const BURST_MS = 5000;
 const IDLE_MS = 150000;
@@ -26,7 +30,7 @@ const LOG_EVERY_MS = 2000;
 const RETAIN_CHUNKS = 48; // live sliding window during the burst (~100+ MB)
 const mode = process.argv[2] || 'log';
 const vm = require('node:vm');
-// node:vm scripts/contexts are the one place Node core allocates on the cppgc heap
+// node:vm scripts/contexts are a Node core path that allocates on the cppgc heap
 // (src/node_contextify.cc), which is what the embedder allocation throughput measures.
 if (mode.startsWith('vm-')) new vm.Script('1');
 
@@ -68,15 +72,15 @@ function burst() {
 function idle() {
   const idleStart = Date.now();
   if (mode === 'silent') {
-    // No JS allocation at all during idle; rely on --trace-gc output.
+    // No recurring application callbacks during idle; rely on --trace-gc output.
     setTimeout(() => log('end'), IDLE_MS);
     return;
   }
   let sink = null;
-  if (mode === 'vm-periodic') {
+  if (mode.startsWith('vm-periodic')) {
     setInterval(() => new vm.Script('1'), 30000).unref();
   }
-  if (mode === 'vm-once-reburst') {
+  if (mode.endsWith('-reburst')) {
     setTimeout(() => { log('reburst'); window = []; i = 0; burstAgain(); }, 125000).unref();
   }
   if (mode === 'trickle') {
@@ -86,7 +90,7 @@ function idle() {
       sink = a; // short-lived
     }, 100).unref();
   }
-  const total = mode === 'vm-once-reburst' ? IDLE_MS + 60000 : IDLE_MS;
+  const total = mode.endsWith('-reburst') ? IDLE_MS + 60000 : IDLE_MS;
   const iv = setInterval(() => {
     log('idle');
     if (Date.now() - idleStart >= total) { clearInterval(iv); log('end'); process.exit(0); }

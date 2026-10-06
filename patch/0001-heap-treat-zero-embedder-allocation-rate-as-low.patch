@@ -2,17 +2,18 @@ From: Austin Burdine <austin@ghost.org>
 Subject: [PATCH] [heap] Treat a zero embedder allocation rate as a low allocation rate
 
 Since https://crrev.com/c/5935313 the allocation throughput trackers are
-SmoothedBytesAndDuration values with no lower bound. An embedder that never
-allocates on the CppHeap (e.g. Node.js) therefore reports an embedder
-allocation throughput of exactly 0, which ComputeMutatorUtilizationImpl()
-maps to a mutator utilization of 0 ("maximal allocation"). As a result
-Heap::HasLowAllocationRate() can never be true and the MemoryReducer only
-ever runs via its 100s watchdog.
+SmoothedBytesAndDuration values with no lower bound. An isolate whose
+sampled CppHeap allocation throughput is exactly 0 -- because it has not
+allocated there, or because the smoothed value has decayed to 0 after a
+long idle period -- has ComputeMutatorUtilizationImpl() map that 0 to a
+mutator utilization of 0 ("maximal allocation"). Heap::HasLowAllocationRate()
+is then false and the MemoryReducer cannot start a GC through its
+low-allocation condition; only the 100s watchdog (or
+ShouldOptimizeForMemoryUsage()) can. Observed in Node.js 24/26.
 
 Zero allocation is the lowest possible allocation rate; report it as such.
-Exact zero is deliberate: any positive throughput still goes through the
-existing comparison against the embedder GC speed, so isolates that do
-allocate on the CppHeap are unaffected.
+Exact zero is deliberate: positive throughput keeps the existing comparison
+against the embedder GC speed.
 
 (Paths are deps/v8/... for applying to a Node.js tree; use -p3 or rewrite to
 src/heap/heap.cc for a V8 checkout.)
@@ -25,10 +26,10 @@ src/heap/heap.cc for a V8 checkout.)
  bool Heap::HasLowEmbedderAllocationRate() {
 +  const double embedder_allocation_rate =
 +      tracer()->EmbedderAllocationThroughputInBytesPerMillisecond();
-+  // An embedder that does not allocate on the CppHeap at all trivially has a
-+  // low allocation rate. ComputeMutatorUtilization() would otherwise treat a
-+  // mutator speed of 0 as maximal allocation and the memory reducer would
-+  // never start on its own.
++  // A sampled CppHeap allocation throughput of exactly 0 is the lowest
++  // possible allocation rate. ComputeMutatorUtilization() would otherwise
++  // treat a mutator speed of 0 as maximal allocation and the memory reducer
++  // could not start through its low-allocation condition.
 +  if (embedder_allocation_rate == 0) return true;
    double mu = ComputeMutatorUtilization(
 -      "Embedder", tracer()->EmbedderAllocationThroughputInBytesPerMillisecond(),
