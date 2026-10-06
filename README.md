@@ -31,7 +31,7 @@ Investigation date: 2026-10-06. Upstream reports: V8 https://issues.chromium.org
 
 | Path | What |
 |---|---|
-| `repro.js` | Standalone repro (no deps) |
+| `repro.js` | Standalone repro (no deps); `repro-min.js` is the 35-line version inlined in the Node.js issue |
 | `run.sh` | `./run.sh <node-version> <idle-mode> [extra node flags]` → runs in `node:<v>-bookworm-slim` (or `IMAGE=…`), writes `traces/…log` with host-elapsed-seconds prefix. `EXTRSS=1` also samples `VmRSS` from `/proc/1/status` via `docker exec` every 5 s (kernel number, independent of Node) into `traces/…-extrss.log` |
 | `traces/` | Raw outputs: 3 Node versions × 3 idle modes, flag experiments, `vm-*` modes, patched and control from-source Node 24 builds. Harness revision: `repro.js` at the commit that added each trace (see `git log -- traces/<file>`); `vm-*` modes were added after the baseline/flag runs. |
 | `patch/` | Proposed fix (`0001-…patch`, paths are `deps/v8/…`; use `src/heap/heap.cc` for upstream) + `Dockerfile` that builds Node 24.21.0 with (`APPLY_PATCH=1`) or without (`APPLY_PATCH=0`) it |
