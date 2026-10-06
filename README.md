@@ -25,7 +25,7 @@ node --trace-gc --trace-memory-reducer --trace-mutator-utilization repro.js [log
 | idle: + 64 KB garbage / 100 ms | 36 s | **none in 150 s, RSS 700 MB** | 122 s (watchdog) | 11.3 s (control: 140.9 s) |
 | idle: one 150 s timer | 44 s | 100 s (watchdog) | 98 s (watchdog) | 11.4 s (control: 100.5 s) |
 
-Investigation date: 2026-10-06. Upstream reports: V8 <TBD>, nodejs/node <TBD>.
+Investigation date: 2026-10-06. Upstream reports: V8 https://issues.chromium.org/issues/570738027, nodejs/node <TBD>.
 
 ## Layout
 
