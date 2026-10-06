@@ -10,6 +10,9 @@
 //   log      (default) after the burst, only log process.memoryUsage() every 2 s
 //   trickle  same, plus allocate ~64 KB of short-lived objects every 100 ms
 //   silent   after the burst, allocate nothing at all (no JS logging; one timer)
+//   vm-once      like `log`, but compile one `vm.Script` at startup (a single cppgc allocation)
+//   vm-periodic  like `log`, plus compile a `vm.Script` every 30 s during idle
+//   vm-once-reburst  `vm-once`, then a second 5 s burst at ~130 s and 60 s more idle
 //
 // Expected:
 //   Node 22: "Memory reducer: ... low alloc" and a "Mark-Compact (reduce)" GC
@@ -22,6 +25,10 @@ const IDLE_MS = 150000;
 const LOG_EVERY_MS = 2000;
 const RETAIN_CHUNKS = 48; // live sliding window during the burst (~100+ MB)
 const mode = process.argv[2] || 'log';
+const vm = require('node:vm');
+// node:vm scripts/contexts are the one place Node core allocates on the cppgc heap
+// (src/node_contextify.cc), which is what the embedder allocation throughput measures.
+if (mode.startsWith('vm-')) new vm.Script('1');
 
 const t0 = Date.now();
 const mb = (n) => (n / 1048576).toFixed(1);
@@ -66,6 +73,12 @@ function idle() {
     return;
   }
   let sink = null;
+  if (mode === 'vm-periodic') {
+    setInterval(() => new vm.Script('1'), 30000).unref();
+  }
+  if (mode === 'vm-once-reburst') {
+    setTimeout(() => { log('reburst'); window = []; i = 0; burstAgain(); }, 125000).unref();
+  }
   if (mode === 'trickle') {
     setInterval(() => {
       const a = new Array(1000);
@@ -73,10 +86,25 @@ function idle() {
       sink = a; // short-lived
     }, 100).unref();
   }
+  const total = mode === 'vm-once-reburst' ? IDLE_MS + 60000 : IDLE_MS;
   const iv = setInterval(() => {
     log('idle');
-    if (Date.now() - idleStart >= IDLE_MS) { clearInterval(iv); log('end'); process.exit(0); }
+    if (Date.now() - idleStart >= total) { clearInterval(iv); log('end'); process.exit(0); }
   }, LOG_EVERY_MS);
+}
+
+function burstAgain() {
+  const end = Date.now() + BURST_MS;
+  (function slice() {
+    const sliceEnd = Date.now() + 50;
+    while (Date.now() < sliceEnd) {
+      window.push(makeChunk(i++));
+      if (window.length > RETAIN_CHUNKS) window.shift();
+    }
+    if (Date.now() < end) return setImmediate(slice);
+    log(`reburst done chunks=${i}`);
+    window = null;
+  })();
 }
 
 burst();

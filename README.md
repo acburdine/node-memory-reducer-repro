@@ -12,7 +12,7 @@ reports exactly `0`, which `Heap::ComputeMutatorUtilizationImpl()` treats as *ma
 A 3-line patch to `Heap::HasLowEmbedderAllocationRate()` fixes it (verified with a patched build).
 
 ```
-node --trace-gc --trace-memory-reducer --trace-mutator-utilization repro.js [log|trickle|silent]
+node --trace-gc --trace-memory-reducer --trace-mutator-utilization repro.js [log|trickle|silent|vm-once|vm-periodic|vm-once-reburst]
 ./run.sh 24.21.0 log        # same, inside node:24.21.0-bookworm-slim, output in traces/
 ```
 
@@ -97,17 +97,33 @@ fix; it is wrong.)
 The `mutator_speed == 0 → 0.0` early return itself is old (already in 12.4). What changed is that the
 value fed to it can now be exactly 0.
 
-### Scope: when is cppgc throughput exactly 0?
+### Scope: when is cppgc throughput exactly 0? (and the `vm.Script` workaround)
 
 `Heap::EmbedderAllocationCounter()` only counts allocations on the isolate's `CppHeap`. Node core does
-allocate there in places: `src/node_contextify.cc:324, 975` (v24.21.0) create `ContextifyContext` /
-`ContextifyScript` with `cppgc::MakeGarbageCollected` (i.e. the `node:vm` module), and native addons can
-(`test/addons/cppgc-object/binding.cc`). A positive-but-decaying throughput passes the 0.993 test
-easily (`gc_speed/(tiny + gc_speed)`), so workloads that allocate on cppgc now and then are *not* stuck;
-only a tracker that has never received a non-zero sample is. The repro is pure JS and never touches
-`vm`, and the traces show `mutator_speed=0` on every tick where the embedder term is evaluated. How
-common that is across real Node apps is not established here; Ghost (the app this was found in) does
-not use `vm` on its request path, but no Ghost traces are in this folder.
+allocate there in one place: `src/node_contextify.cc:324, 975` (v24.21.0) create `ContextifyContext` /
+`ContextifyScript` with `cppgc::MakeGarbageCollected`, i.e. the `node:vm` module. Native addons can too
+(`test/addons/cppgc-object/binding.cc`). A plain-JS workload that never touches `vm` has a tracker that
+has never seen a non-zero sample.
+
+Measured on the official `node:24.21.0` image (`traces/24.21.0-vm-*.log`):
+
+| mode | what | result |
+|---|---|---|
+| `vm-once` | one `new vm.Script('1')` at startup, then burst + idle | `low alloc` on 2nd tick, reduce GC **11 s** after burst — same as the patched build |
+| `vm-periodic` | same, plus a `vm.Script` every 30 s during idle | 11 s |
+| `vm-once-reburst` | `vm-once`, then a second burst at ~130 s | first burst: 11 s. **Second burst: `high alloc` on every tick to the end of the run (80 s later)**, `Embedder mutator utilization = 0.000 (mutator_speed=0, gc_speed=1)` again |
+
+So any positive cppgc throughput, however small, passes the 0.993 test (`gc_speed/(tiny + gc_speed)`),
+and a single `vm.Script` compile is enough to unstick the reducer — **for about 110 s**. The tracker
+decays by `exp2(-elapsed/100 ms)`; after ~1100 half-lives the double underflows to exactly `0.0` and the
+`mutator_speed == 0` early return is back. In `vm-once-reburst` the one-shot allocation is ~130 s old
+when the second burst ends, and the trace shows exactly that. (This also demonstrates the
+"exact-zero after long idle" behaviour of `SmoothedBytesAndDuration` empirically; see Unverified notes
+for why it probably doesn't bite the young/old terms.)
+
+Practical consequence: a userland stopgap exists — compile a trivial `vm.Script` on an interval shorter
+than ~100 s (or per request). Ugly, but it is the only JS-reachable lever found that fixes the heuristic
+without changing heap sizing. First noticed independently in Ghost by allocating a `vm.Script`.
 
 ### Other ways the reducer can start (none apply to the repro)
 
@@ -245,10 +261,10 @@ First tick after the burst (t=8.2) is still `high alloc` (young/old terms still 
 unpatched official binary: 100 s / 100 s / never. With the patch `HasLowEmbedderAllocationRate` returns
 before `ComputeMutatorUtilization`, so no `Embedder mutator utilization` line is printed.
 
-Caveat: the from-source build pushed through ~830 chunks in the 5 s burst vs ~106 for the official
-`node:24.21.0-bookworm-slim` binary (different build flags; not investigated), so heap sizes differ.
-The comparison is about reducer behaviour, not throughput. An unpatched from-source control build was
-not made.
+Caveat on chunk counts: the baseline runs (9 containers in parallel on the same host) got through
+~106 chunks in 5 s; later runs with 3 containers in parallel got ~420 (official binary, `vm-*` modes) to
+~830 (patched build, host otherwise idle). Host contention, not build flags. Heap sizes differ
+accordingly; the comparison is about reducer behaviour, not throughput.
 
 Alternative fix: skip the embedder term in `HasLowAllocationRate()` when `EmbedderAllocationCounter()`
 has never been non-zero. Equivalent for Node; the patch above is smaller.
@@ -279,9 +295,10 @@ SmoothedBytesAndDuration OR "mutator utilization" OR "embedder allocation"` (23 
 
 ## Unverified notes
 
-- With pure exponential decay (`exp2(-delay/decay)`, 100 ms half-life, 8 s ticks ⇒ ×2⁻⁸⁰ per tick),
-  young/old throughput would underflow to exactly 0.0 after ~14 zero-byte ticks (~112 s) and hit the same
-  early return — but a positive rate normally passes the 0.993 test long before that, so a real failure
-  needs an explanation for why the reducer didn't start earlier. Not observed in these traces.
+- Underflow to exactly 0.0 after ~110 s without allocation is now demonstrated for the *embedder*
+  tracker (`vm-once-reburst`). The young/old trackers could in principle do the same, but a positive
+  rate passes the 0.993 test long before that, so a real failure there needs an explanation for why the
+  reducer didn't start earlier (e.g. it was in `kDone` and a later major GC re-armed it after >110 s of
+  no JS allocation — which no JS process does). Not observed.
 - Whether Chromium is affected is not measured; Blink's cppgc allocation presumably keeps the embedder
   tracker non-zero but nothing here shows that.
