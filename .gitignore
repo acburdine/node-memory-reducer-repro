@@ -2,5 +2,6 @@
 src/
 codex-review-prompt.md
 v8-bug-report.md
+v8-bug-report-long.md
 nodejs-issue.md
 .DS_Store
