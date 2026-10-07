@@ -357,5 +357,7 @@ reducer" OR "idle gc" …) modified>2024-10-01` (26, none relevant), and the 201
   consistent with underflow in the exponential-decay tracker. Analogous underflow is mathematically
   possible for the young/old trackers, but no resulting scheduling failure for those trackers has been
   demonstrated here.
-- Whether Chromium is affected is not measured; Blink's cppgc allocation presumably keeps the embedder
-  tracker non-zero but nothing here shows that.
+- Whether Chromium is affected is not measured here. Chromium triage (issue 570738027, comment #3)
+  reproduced the Node 24 `high alloc` loop and reported that Chrome 154 on `about:blank`, idle for
+  2 minutes with the same `--js-flags`, logs `low alloc` — consistent with Blink keeping the embedder
+  tracker non-zero, though one observation on a blank tab.
