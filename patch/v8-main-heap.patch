@@ -1,0 +1,39 @@
+[heap] Treat zero embedder allocation throughput as a low allocation rate
+
+Since https://crrev.com/c/5935313 allocation throughput is tracked with
+SmoothedBytesAndDuration, which has no lower bound. An isolate whose
+sampled CppHeap allocation throughput is exactly 0 -- it has never
+allocated there, or the smoothed value decayed to 0 after a long idle
+period -- gets mutator utilization 0 from ComputeMutatorUtilizationImpl()
+("maximal allocation"). HasLowAllocationRate() is then never true and the
+MemoryReducer cannot start a GC through its low-allocation condition;
+only the 100s watchdog can. Node.js hits this for any process that does
+not use node:vm.
+
+Zero allocation is the lowest possible allocation rate; report it as
+such. Positive throughput keeps the existing comparison against the
+embedder GC speed, so isolates that allocate on the CppHeap are
+unaffected.
+
+Bug: 570738027
+
+diff --git a/src/heap/heap.cc b/src/heap/heap.cc
+--- a/src/heap/heap.cc
++++ b/src/heap/heap.cc
+@@ -3540,8 +3540,15 @@ bool Heap::HasLowOldGenerationAllocationRate() {
+ }
+ 
+ bool Heap::HasLowEmbedderAllocationRate() {
++  const double embedder_allocation_rate =
++      tracer()->EmbedderAllocationThroughputInBytesPerMillisecond();
++  // A sampled CppHeap allocation throughput of exactly 0 is the lowest
++  // possible allocation rate. ComputeMutatorUtilization() would otherwise
++  // treat a mutator speed of 0 as maximal allocation and the memory reducer
++  // could not start through its low-allocation condition.
++  if (embedder_allocation_rate == 0) return true;
+   double mu = ComputeMutatorUtilization(
+-      "Embedder", tracer()->EmbedderAllocationThroughputInBytesPerMillisecond(),
++      "Embedder", embedder_allocation_rate,
+       tracer()->EmbedderSpeedInBytesPerMillisecond());
+   const double kHighMutatorUtilization = 0.993;
+   return mu > kHighMutatorUtilization;
