@@ -25,7 +25,8 @@ node --trace-gc --trace-memory-reducer --trace-mutator-utilization repro.js [log
 | idle: + 64 KB garbage / 100 ms | 36 s | **none in 150 s, RSS 700 MB** | 122 s (watchdog) | 11.3 s (control: 140.9 s) |
 | idle: one 150 s timer | 44 s | 100 s (watchdog) | 98 s (watchdog) | 11.4 s (control: 100.5 s) |
 
-Investigation date: 2026-10-06. Upstream reports: V8 https://issues.chromium.org/issues/570738027, nodejs/node https://github.com/nodejs/node/issues/66564.
+Investigation date: 2026-10-06. Independently reproduced by Chromium triage (Node 24, Linux) and by a
+Node.js triager (v24.21.0 and v26.10.0, not v22.23.3, macOS x64). Upstream reports: V8 https://issues.chromium.org/issues/570738027, nodejs/node https://github.com/nodejs/node/issues/66564.
 
 ## Layout
 
